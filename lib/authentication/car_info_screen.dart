@@ -19,7 +19,7 @@ class _CarInfoScreenState extends State<CarInfoScreen>
   TextEditingController carNumberTextEditingController = TextEditingController();
   TextEditingController carColorTextEditingController = TextEditingController();
 
-  List<String> carTypesList = ["UberX", "Uber Premier", "Bike"];
+  List<String> carTypesList = ["UberX", "Uber Premier"];
   String? selectedCarType;
 
 

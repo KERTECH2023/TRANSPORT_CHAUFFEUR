@@ -104,29 +104,29 @@ class AssistantMethods {
       DirectionDetailsInfo directionDetailsInfo, String? vehicleType) {
     double baseFare, FareAmountPerMinute, FareAmountPerKilometer;
     if (vehicleType == "UberX") {
-      baseFare = 30;
-      FareAmountPerMinute = (directionDetailsInfo.duration_value! / 60) * 3;
+      baseFare = 4.5;
+      
       FareAmountPerKilometer =
-          (directionDetailsInfo.distance_value! / 1000) * 20;
+          directionDetailsInfo.distance_value! as double;
     }
 
     else if (vehicleType == "Uber Premier") {
-      baseFare = 50;
+      baseFare = 4.5;
       FareAmountPerMinute = (directionDetailsInfo.duration_value! / 60) * 4;
       FareAmountPerKilometer =
           (directionDetailsInfo.distance_value! / 1000) * 25;
     }
 
     else {
-      baseFare = 20;
+      baseFare = 4.5;
       FareAmountPerMinute = (directionDetailsInfo.duration_value! / 60) * 1;
       FareAmountPerKilometer =
           (directionDetailsInfo.distance_value! / 1000) * 10;
     }
 
-    //In taka
-    double totalFareAmount = baseFare + FareAmountPerMinute +
-        FareAmountPerKilometer;
+  
+    double totalFareAmount = baseFare *
+        directionDetailsInfo.duration_value!;
 
     return double.parse(totalFareAmount.toStringAsFixed(1));
   }
