@@ -49,7 +49,7 @@ class _RegisterState extends State<Register> {
             password:passwordTextEditingController.text.trim()
         ).catchError((message){
           Navigator.pop(context);
-          Fluttertoast.showToast(msg: "Error" + message);
+          Fluttertoast.showToast(msg: "Error" + message.toString());
         })
     ).user;
 

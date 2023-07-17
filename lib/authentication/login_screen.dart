@@ -29,7 +29,7 @@ String usertoken="";
     super.initState();
     emailTextEditingController.addListener(() => setState(() {}) );
     FirebaseMessaging.instance.getToken().then((value) => {usertoken=value.toString()
-     
+   
      });
   }
 

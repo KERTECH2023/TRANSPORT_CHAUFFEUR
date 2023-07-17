@@ -107,7 +107,7 @@ class AssistantMethods {
       baseFare = 4.5;
       
       FareAmountPerKilometer =
-          directionDetailsInfo.distance_value! as double;
+         (directionDetailsInfo.distance_value! / 1000) * 25;
     }
 
     else if (vehicleType == "Uber Premier") {

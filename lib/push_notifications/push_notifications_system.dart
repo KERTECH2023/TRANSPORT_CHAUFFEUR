@@ -9,27 +9,42 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../global/global.dart';
+@pragma('vm:entry-point')
+ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
 
+ 
+  print("Handling a background message");
+  print("message data: "+ message.data["rideRequestId"].toString());
+}
 class PushNotificationSystem {
-
+  
   FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
   Future initializeCloudMessaging(BuildContext context) async{
+    
     print(FirebaseMessaging.instance.getToken().toString());
+
+    
     // Terminated - When the app is completely closed and the app resumes from the push notification
     FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? remoteMessage){
       if(remoteMessage!=null){
         // display ride request information
       print(remoteMessage.data.toString());
-        retrieveRideRequestInformation(remoteMessage.data["rideRequestId"],context);
+       // retrieveRideRequestInformation(remoteMessage.data["rideRequestId"],context);
+retrieveRideRequestInformation(remoteMessage.data["rideRequestId"],context);
+       
       }
     });
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
     // Background - When the app is minimized and the app resumes from the push notification
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage? remoteMessage) {
       if(remoteMessage!=null){
         // display ride request information
+        //retrieveRideRequestInformation(remoteMessage.data["rideRequestId"],context);
         retrieveRideRequestInformation(remoteMessage.data["rideRequestId"],context);
       }
     });
@@ -37,7 +52,7 @@ class PushNotificationSystem {
     // Foreground - When the app is open and receives a notification
     FirebaseMessaging.onMessage.listen((RemoteMessage? remoteMessage) {
       print("testt 3adii");
-      print("teeesstt" + remoteMessage.toString());
+      print("teeesstt " + remoteMessage!.data.values.toString());
       if(remoteMessage!=null){
        
         // display ride request information
@@ -61,6 +76,7 @@ class PushNotificationSystem {
   }
 
   retrieveRideRequestInformation(String rideRequestID,BuildContext context){
+    print("gggggggggggg"+ rideRequestID.toString());
     FirebaseDatabase.instance.ref()
         .child("AllRideRequests")
         .child(rideRequestID)
@@ -102,7 +118,7 @@ class PushNotificationSystem {
             rideRequestInformation.rideRequestId= rideRequestId;
 
 
-
+            print("id ride "+rideRequestInformation.toString() );
             showDialog(
               context: context,
               builder: (BuildContext context) => NotificationDialogBox(

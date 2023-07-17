@@ -26,6 +26,8 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
     FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
   @override
   Widget build(BuildContext context) {
+    // print("ride request infos "+ widget.rideRequestInformation.toString());
+    // print("sourrceeeeee" +  widget.rideRequestInformation!.sourceAddress!);
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(24),
@@ -145,7 +147,7 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                         audioPlayer = AssetsAudioPlayer();
 
                         Navigator.pop(context);
-                        
+                        print("bwwwwwwwwwwwww "+FirebaseDatabase.instance.toString());
                         // Then ensures that all after the first firebase query, next one is executed
                         FirebaseDatabase.instance.ref()
                             .child("AllRideRequests")
@@ -163,7 +165,7 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                             .child("Drivers")
                             .child(currentFirebaseUser!.uid)
                             .child("tripHistory")
-                            .child(widget.rideRequestInformation!.rideRequestId!)
+                            .child("NXSISOS6cX089fPfoju")
                             .remove()
 
                         }).then((value) => {
