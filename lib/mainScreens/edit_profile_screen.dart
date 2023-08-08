@@ -63,7 +63,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfileScreen()));
                           },
                           child: Text(
-                              'Total Trips: ' + Provider.of<AppInfo>(context,listen: false).countTotalTrips!.toString(),
+                              'Total Trips: ' + Provider.of<AppInfo>(context,listen: false).countTotalTrips.toString(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,

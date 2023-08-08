@@ -28,7 +28,7 @@ class _TripHistoryScreenState extends State<TripHistoryScreen> {
           icon: const Icon(Icons.close),
           onPressed: ()
           {
-            SystemNavigator.pop();
+            Navigator.pushNamed(context, '/main_screen');
           },
         ),
       ),

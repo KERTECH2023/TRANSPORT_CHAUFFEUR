@@ -106,21 +106,21 @@ class AssistantMethods {
     if (vehicleType == "UberX") {
       baseFare = 4.5;
       
-      FareAmountPerKilometer =
+      FareAmountPerKilometer = baseFare*
          (directionDetailsInfo.distance_value! / 1000) * 25;
     }
 
     else if (vehicleType == "Uber Premier") {
       baseFare = 4.5;
-      FareAmountPerMinute = (directionDetailsInfo.duration_value! / 60) * 4;
-      FareAmountPerKilometer =
+     
+      FareAmountPerKilometer =baseFare*
           (directionDetailsInfo.distance_value! / 1000) * 25;
     }
 
     else {
       baseFare = 4.5;
-      FareAmountPerMinute = (directionDetailsInfo.duration_value! / 60) * 1;
-      FareAmountPerKilometer =
+     
+      FareAmountPerKilometer =baseFare*
           (directionDetailsInfo.distance_value! / 1000) * 10;
     }
 

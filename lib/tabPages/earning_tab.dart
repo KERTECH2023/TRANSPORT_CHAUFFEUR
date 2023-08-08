@@ -129,8 +129,8 @@ class _EarningsTabPageState extends State<EarningsTabPage> {
                     const SizedBox(height: 10,),
 
                     Text(
-                        "Tk " + Provider.of<AppInfo>(context,listen: false).lastTripHistoryInformationModel!.fareAmount.toString(),
-                        style: TextStyle(
+                        "Tk ${Provider.of<AppInfo>(context,listen: false).lastTripHistoryInformationModel!.fareAmount}",
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                           fontSize: 50,
@@ -151,16 +151,16 @@ class _EarningsTabPageState extends State<EarningsTabPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.car_rental,
                               size: 20,
                             ),
 
-                            SizedBox(width: 5),
+                            const SizedBox(width: 5),
 
                             Text(
                                 Provider.of<AppInfo>(context,listen: false).lastTripDirectionDetailsInformation!.distance_text!,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
                                   fontSize: 17,
@@ -173,16 +173,16 @@ class _EarningsTabPageState extends State<EarningsTabPage> {
 
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.punch_clock_rounded,
                               size: 20,
                             ),
 
-                            SizedBox(width: 5),
+                            const SizedBox(width: 5),
 
                             Text(
                                Provider.of<AppInfo>(context,listen: false).lastTripDirectionDetailsInformation!.duration_text!,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
                                   fontSize: 15,
@@ -234,8 +234,8 @@ class _EarningsTabPageState extends State<EarningsTabPage> {
                     const SizedBox(height: 10,),
 
                     Text(
-                        "Tk " + driverData.totalEarnings!,
-                        style: TextStyle(
+                        "Tk ${driverData.totalEarnings!}",
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                           fontSize: 50,

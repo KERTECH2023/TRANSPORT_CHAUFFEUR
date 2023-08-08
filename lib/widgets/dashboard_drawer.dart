@@ -1,3 +1,4 @@
+import 'package:drivers_app/mainScreens/edit_profile_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:drivers_app/global/global.dart';
@@ -75,77 +76,7 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
             ),
           ),
 
-          GestureDetector(
-            onTap: (){
 
-            },
-
-            child: const ListTile(
-              leading: Icon(Icons.local_offer, color: Colors.black),
-              title: Text(
-                "Promos",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16
-                ),
-              ),
-            ),
-          ),
-
-          GestureDetector(
-            onTap: (){
-
-            },
-
-            child: const ListTile(
-              leading: Icon(Icons.notifications, color: Colors.black),
-              title: Text(
-                "Notifications",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16
-                ),
-              ),
-            ),
-          ),
-
-          GestureDetector(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileScreen()));
-            },
-
-            child: const ListTile(
-              leading: Icon(Icons.person, color: Colors.black),
-              title: Text(
-                "Profile",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16
-                ),
-              ),
-            ),
-          ),
-
-          GestureDetector(
-            onTap: (){
-
-            },
-
-            child: const ListTile(
-              leading: Icon(Icons.info, color: Colors.black),
-              title: Text(
-                "About Us",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16
-                ),
-              ),
-            ),
-          ),
 
           GestureDetector(
             onTap: (){

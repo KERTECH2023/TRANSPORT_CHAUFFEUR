@@ -80,11 +80,11 @@ class _FareAmountDialogState extends State<FareAmountDialog> {
                 padding: const EdgeInsets.all(10.0),
                 child: ElevatedButton(
                   onPressed: (){
-                    SystemNavigator.pop();
+                    Navigator.pushNamed(context, "/main_screen");
                   },
 
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.redAccent
+                    backgroundColor: Colors.redAccent
                   ),
 
                   child: const Text(

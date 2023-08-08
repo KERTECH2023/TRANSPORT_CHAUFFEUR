@@ -165,12 +165,12 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                             .child("Drivers")
                             .child(currentFirebaseUser!.uid)
                             .child("tripHistory")
-                            .child("NXSISOS6cX089fPfoju")
+                            .child(widget.rideRequestInformation!.rideRequestId!)
                             .remove()
 
                         }).then((value) => {
-                          Fluttertoast.showToast(msg: "Ride request is cancelled, restarting app")
-
+                          Fluttertoast.showToast(msg: "Ride request is cancelled, restarting app"),
+                          Navigator.pushNamed(context, "/main_screen")
                         });
                         
 
@@ -191,14 +191,14 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
 
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          primary: Colors.blue
+                          backgroundColor: Colors.blue
                       ),
 
                       onPressed: () async{
-                        // Accept the ride request
-                        audioPlayer.pause();
-                        audioPlayer.stop();
-                        audioPlayer = AssetsAudioPlayer();
+                        // // Accept the ride request
+                        // audioPlayer.pause();
+                        // audioPlayer.stop();
+                        // audioPlayer = AssetsAudioPlayer();
 
                         // Driver has accepted the ride request
                         await acceptRideRequest(context);
@@ -264,7 +264,7 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
           else{
 
             Fluttertoast.showToast(msg: "This Ride Request do not exist.");
-
+            
           }
 
        });
