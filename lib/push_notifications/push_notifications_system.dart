@@ -106,6 +106,7 @@ retrieveRideRequestInformation(remoteMessage.data["rideRequestId"],context);
 
             String userName = (snapData.snapshot.value! as Map)["userName"];
             String userPhone = (snapData.snapshot.value! as Map)["userPhone"];
+            String healthStatus = (snapData.snapshot.value! as Map)["Healthstatus"];
             String? rideRequestId = snapData.snapshot.key;
             RideRequestInformation rideRequestInformation = RideRequestInformation();
             rideRequestInformation.rideRequestId = rideRequestID;
@@ -116,7 +117,7 @@ retrieveRideRequestInformation(remoteMessage.data["rideRequestId"],context);
             rideRequestInformation.sourceAddress = sourceAddress;
             rideRequestInformation.destinationAddress = destinationAddress;
             rideRequestInformation.rideRequestId= rideRequestId;
-
+            rideRequestInformation.healthStatus= healthStatus;
 
             print("id ride "+rideRequestInformation.toString() );
             showDialog(

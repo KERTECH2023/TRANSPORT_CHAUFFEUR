@@ -124,6 +124,30 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                       ),
                     ],
                   ),
+                  // Row(
+                  //   children: [
+                  //     Image.asset(
+                  //       'images/Handicapped.png',
+                  //       width: 25,
+                  //       height: 25,
+                  //     ),
+
+                  //     const SizedBox(width: 20),
+
+                  //     Expanded(
+                  //       child: Container(
+                  //         child: Text(
+                  //           widget.rideRequestInformation!.healthStatus!,
+                  //           style: const TextStyle(
+                  //               fontSize: 16,
+                  //               fontWeight: FontWeight.bold,
+                  //               color: Colors.white
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
               ],
               ),
             ),
@@ -145,7 +169,7 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                         audioPlayer.pause();
                         audioPlayer.stop();
                         audioPlayer = AssetsAudioPlayer();
-
+                        Navigator.pushNamed(context, "/main_screen");
                         Navigator.pop(context);
                         print("bwwwwwwwwwwwww "+FirebaseDatabase.instance.toString());
                         // Then ensures that all after the first firebase query, next one is executed
@@ -169,8 +193,9 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                             .remove()
 
                         }).then((value) => {
+                          Navigator.pushNamed(context, "/main_screen"),
                           Fluttertoast.showToast(msg: "Ride request is cancelled, restarting app"),
-                          Navigator.pushNamed(context, "/main_screen")
+                          
                         });
                         
 

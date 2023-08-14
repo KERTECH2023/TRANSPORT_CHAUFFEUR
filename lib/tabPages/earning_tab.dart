@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 
 
 class EarningsTabPage extends StatefulWidget {
+  const EarningsTabPage({super.key});
+
 
 
   @override
@@ -129,14 +131,14 @@ class _EarningsTabPageState extends State<EarningsTabPage> {
                     const SizedBox(height: 10,),
 
                     Text(
-                        "Tk ${Provider.of<AppInfo>(context,listen: false).lastTripHistoryInformationModel!.fareAmount}",
+                        "TD ${Provider.of<AppInfo>(context,listen: false).lastTripHistoryInformationModel!.fareAmount}",
+                        
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                           fontSize: 50,
                         )
                     ),
-
                     const SizedBox(height: 10,),
 
                     const Divider(
