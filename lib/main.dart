@@ -1,12 +1,15 @@
 import 'dart:io';
 import 'package:drivers_app/authentication/car_info_screen.dart';
+import 'package:drivers_app/authentication/phone_signin.dart';
 import 'package:drivers_app/mainScreens/new_trip_screen.dart';
 import 'package:drivers_app/splashScreen/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'InfoHandler/app_info.dart';
+import 'authentication/delete_account.dart';
 import 'authentication/login_screen.dart';
 import 'authentication/register_screen.dart';
 import 'mainScreens/main_screen.dart';
@@ -24,11 +27,13 @@ void main() async{
   
   runApp(ChangeNotifierProvider(
     create: (context) => AppInfo(),
-    child: MaterialApp(
+    child: GetMaterialApp(
         initialRoute: '/',
         routes: {
           '/' : (context) => MySplashScreen(),
           '/main_screen': (context) => MainScreen(),
+          '/phone_signin': (context) => Phonesignin(),
+          '/delete_account': (context) =>AccountDeletionScreen(),
           '/login_screen' : (context) => Login(),
           '/register_screen': (context) => Register(),
           '/car_info_screen': (context) => CarInfoScreen(),

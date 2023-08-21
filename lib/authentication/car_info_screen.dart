@@ -1,8 +1,15 @@
+import 'dart:io';
+
 import 'package:drivers_app/global/global.dart';
 import 'package:drivers_app/splashScreen/splash_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+
 
 class CarInfoScreen extends StatefulWidget
 {
@@ -21,6 +28,32 @@ class _CarInfoScreenState extends State<CarInfoScreen>
 
   List<String> carTypesList = ["UberX", "Uber Premier"];
   String? selectedCarType;
+   final FirebaseStorage _storage = FirebaseStorage.instance;
+  final ImagePicker _imagePicker = ImagePicker();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> uploadImage(File imageFile, String imageName) async {
+    try {
+      User? user = _auth.currentUser;
+      if (user != null) {
+        String userId = user.uid;
+        Reference storageRef = _storage.ref().child('user_images/$userId/$imageName');
+        await storageRef.putFile(imageFile);
+        print('Image uploaded successfully: $imageName');
+      } else {
+        print('User is not authenticated');
+      }
+    } catch (e) {
+      print('Error uploading image: $e');
+    }
+  }
+  Future<void> pickAndUploadImage(String imageName) async {
+    final pickedFile = await _imagePicker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      File imageFile = File(pickedFile.path);
+      uploadImage(imageFile, imageName);
+    }
+  }
 
 
   saveCarInfo()

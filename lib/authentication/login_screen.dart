@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 
 import '../global/global.dart';
@@ -86,6 +87,62 @@ String usertoken="";
 
 
   }
+  Future<UserCredential> signInWithGoogle() async {
+  // Step 1: Initiate Google Sign-In
+  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+  // Step 2: Obtain Google Sign-In Authentication
+  final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
+
+  // Step 3: Create Firebase credentials
+  final OAuthCredential credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth.accessToken,
+    idToken: googleAuth.idToken,
+  );
+
+  // Step 4: Sign in with Firebase using the obtained credentials
+  return await FirebaseAuth.instance.signInWithCredential(credential);
+}
+
+ Future<void> handleGoogleSignIn() async {
+    try {
+      UserCredential userCredential = await signInWithGoogle();
+      User? user = userCredential.user;
+      if (user != null) {
+        // Successfully signed in with Google.
+        // You can store the user information or perform any other actions here.
+        Navigator.pushNamed(context, '/main_screen'); // Replace '/next_interface' with the route of your next interface.
+      } else {
+        // Handle sign-in failure here, if needed.
+        Fluttertoast.showToast(msg: "Google Sign-In Failed. Please try again.");
+      }
+    } catch (e) {
+      // Handle sign-in failure and errors here, if needed.
+      print("Google Sign-In Error: $e");
+      Fluttertoast.showToast(msg: "Google Sign-In Error: $e");
+    }
+  }
+    
+
+  // Function for Facebook Login
+  void handleFacebookLogin() {
+    // Implement the Facebook Login logic here
+  }
+
+  // Function for Phone Number Login
+void handlePhoneNumberLogin() {
+  Navigator.pushNamed(context, '/phone_signin'); // Replace '/phone_number_login_interface' with the route of your desired interface
+}
+
+  ButtonStyle customButtonStyle() {
+    return ElevatedButton.styleFrom(
+      primary: Colors.transparent,
+      onPrimary: Colors.transparent,
+      elevation: 0,
+      padding: EdgeInsets.zero,
+    );
+  }
+
 
 
   @override
@@ -232,7 +289,7 @@ String usertoken="";
                     },
 
                   ),
-
+                    
                   const SizedBox(height: 20),
 
                   ElevatedButton(
@@ -251,6 +308,49 @@ String usertoken="";
                             fontSize: 16
                         ),
                       )
+                  ),
+                  const SizedBox(height: 10), // Adding some space between "Login" button and "Or" text
+                  const Text(
+                    "OR",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: handleGoogleSignIn,
+                        style: customButtonStyle(), // Custom style for Google Sign-In button
+                        child: Image.asset(
+                          "images/google.png",
+                          width: 50,
+                          height: 50,
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                      ElevatedButton(
+                        onPressed: handleFacebookLogin,
+                        style: customButtonStyle(), // Custom style for Facebook Login button
+                        child: Image.asset(
+                          "images/facebook.png",
+                          width: 50,
+                          height: 50,
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                      ElevatedButton(
+                        onPressed: handlePhoneNumberLogin,
+                        style: customButtonStyle(), // Custom style for Phone Number Login button
+                        child: Image.asset(
+                          "images/phone.png",
+                          width: 50,
+                          height: 50,
+                        ),
+                      ),
+                    ],
                   ),
 
                   TextButton(

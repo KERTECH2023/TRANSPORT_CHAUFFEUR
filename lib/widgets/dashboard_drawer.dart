@@ -1,3 +1,4 @@
+import 'package:drivers_app/authentication/delete_account.dart';
 import 'package:drivers_app/mainScreens/edit_profile_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -97,7 +98,24 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
               ),
             ),
           ),
+          GestureDetector(
+            onTap: (){
+              //diactiver
+              Navigator.push(context, MaterialPageRoute(builder: (context) =>  AccountDeletionScreen()));
+            },
 
+            child: const ListTile(
+              leading: Icon(Icons.logout, color: Colors.black),
+              title: Text(
+                "Delete Account",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16
+                ),
+              ),
+            ),
+          ),
 
 
         ],
