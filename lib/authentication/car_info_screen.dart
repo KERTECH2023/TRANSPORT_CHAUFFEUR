@@ -70,7 +70,7 @@ class _CarInfoScreenState extends State<CarInfoScreen>
     driversRef.child(currentFirebaseUser!.uid).child("carDetails").set(driverCarInfoMap);
 
     Fluttertoast.showToast(msg: "Car Details has been saved");
-    Navigator.pushNamed(context, '/');
+    Navigator.pushNamed(context, '/upload_image');
   }
 
   @override
@@ -226,7 +226,7 @@ class _CarInfoScreenState extends State<CarInfoScreen>
                   primary: Colors.black,
                 ),
                 child: const Text(
-                  "Save Now",
+                  "Next",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
