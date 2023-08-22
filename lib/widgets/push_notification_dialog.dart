@@ -124,30 +124,32 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                       ),
                     ],
                   ),
-                  // Row(
-                  //   children: [
-                  //     Image.asset(
-                  //       'images/Handicapped.png',
-                  //       width: 25,
-                  //       height: 25,
-                  //     ),
 
-                  //     const SizedBox(width: 20),
+                  const SizedBox(height: 25),
+                  Row(
+                    children: [
+                      Image.asset(
+                        'images/Handicapped.png',
+                        width: 25,
+                        height: 25,
+                      ),
 
-                  //     Expanded(
-                  //       child: Container(
-                  //         child: Text(
-                  //           widget.rideRequestInformation!.healthStatus!,
-                  //           style: const TextStyle(
-                  //               fontSize: 16,
-                  //               fontWeight: FontWeight.bold,
-                  //               color: Colors.white
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
+                      const SizedBox(width: 20),
+
+                      Expanded(
+                        child: Container(
+                          child: Text(
+                            widget.rideRequestInformation!.healthStatus!,
+                            style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
               ],
               ),
             ),
@@ -219,14 +221,14 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                           backgroundColor: Colors.blue
                       ),
 
-                      onPressed: () async{
+                      onPressed: () {
                         // // Accept the ride request
                         // audioPlayer.pause();
                         // audioPlayer.stop();
                         // audioPlayer = AssetsAudioPlayer();
 
                         // Driver has accepted the ride request
-                        await acceptRideRequest(context);
+                         acceptRideRequest(context);
                         Navigator.push(context, MaterialPageRoute(builder: (c)=> NewTripScreen(rideRequestInformation: widget.rideRequestInformation,)));
 
                       },
