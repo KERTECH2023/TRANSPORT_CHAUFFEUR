@@ -168,9 +168,9 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
 
                       onPressed: (){
                         // Cancel the ride request
-                        audioPlayer.pause();
-                        audioPlayer.stop();
-                        audioPlayer = AssetsAudioPlayer();
+                        // audioPlayer.pause();
+                        // audioPlayer.stop();
+                        // audioPlayer = AssetsAudioPlayer();
                         Navigator.pushNamed(context, "/main_screen");
                         Navigator.pop(context);
                         print("bwwwwwwwwwwwww "+FirebaseDatabase.instance.toString());
@@ -272,8 +272,8 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
           else{
             Fluttertoast.showToast(msg: "Ride request does not exist");
           }
-
-          if(snapData.snapshot.value == "idle"){
+print("ffffffffff"+snapData.snapshot.value.toString());
+          if(rideRequestId == widget.rideRequestInformation!.rideRequestId!){
             FirebaseDatabase.instance.ref()
                 .child("Drivers")
                 .child(currentFirebaseUser!.uid)
@@ -283,7 +283,7 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
             AssistantMethods.pauseLiveLocationUpdates();
             Fluttertoast.showToast(msg: "Paused live location updates");
 
-            Navigator.push(context, MaterialPageRoute(builder: (c) => NewTripScreen()));
+           
 
           }
 
