@@ -1,33 +1,29 @@
-import 'package:drivers_app/global/global.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class FareAmountDialog extends StatefulWidget {
-
-  double? fareAmount;
-  String? userName;
-
-  FareAmountDialog({this.fareAmount,this.userName});
+class UserCancelMessageDialog extends StatefulWidget {
+  const UserCancelMessageDialog({Key? key}) : super(key: key);
 
   @override
-  State<FareAmountDialog> createState() => _FareAmountDialogState();
+  State<UserCancelMessageDialog> createState() => _UserCancelMessageDialogState();
 }
 
-class _FareAmountDialogState extends State<FareAmountDialog> {
+class _UserCancelMessageDialogState extends State<UserCancelMessageDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5)
+          borderRadius: BorderRadius.circular(5)
       ),
-      backgroundColor: Color.fromRGBO(0 , 177 , 118, 1),
+      backgroundColor: Colors.black,
       child: Container(
         margin: EdgeInsets.all(6),
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Color.fromRGBO(0 , 177 , 118, 1),
-          borderRadius: BorderRadius.circular(6)
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(6)
         ),
 
         child: Padding(
@@ -36,34 +32,34 @@ class _FareAmountDialogState extends State<FareAmountDialog> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text(
-                "Trip Fare Amount",
+                "Trip Message",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
-                    color: Colors.white
+                    color: Colors.black
                 ),
               ),
 
               const SizedBox(height: 30),
 
-              Text(
-                "Ask ${widget.userName!} to pay",
+              const Text(
+                "User has cancelled the trip",
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                    fontSize: 20,
+                style: TextStyle(
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white
+                    color: Colors.black
                 ),
               ),
 
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
 
-              Text(
-                widget.fareAmount.toString(),
+              const Text(
+                "Ride Status:\n Cancelled",
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                    fontSize: 60,
-                    color: Colors.white
+                style: TextStyle(
+                    fontSize: 30,
+                    color: Colors.black
                 ),
               ),
               const SizedBox(height: 40),
@@ -71,7 +67,7 @@ class _FareAmountDialogState extends State<FareAmountDialog> {
               const Divider(
                 height: 1,
                 thickness: 1,
-                color: Colors.white,
+                color: Colors.black,
               ),
 
               const SizedBox(height: 10),
@@ -80,20 +76,21 @@ class _FareAmountDialogState extends State<FareAmountDialog> {
                 padding: const EdgeInsets.all(10.0),
                 child: ElevatedButton(
                   onPressed: (){
-                    Navigator.pop(context);
+                    
+                    Navigator.pop(context, '/main_screen');
                   },
 
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.redAccent
+                      primary: const Color.fromRGBO(0 , 177 , 118, 1)
                   ),
 
                   child: const Text(
-                    "Collect Cash",
+                    "Okay",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white
                     ),
                   ),
                 ),

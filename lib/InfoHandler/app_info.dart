@@ -37,6 +37,11 @@ class AppInfo extends ChangeNotifier{
     notifyListeners();
   }
 
+  void updateriderequeststatus(String riderequeststatus){
+    riderequeststatus = riderequeststatus;
+    notifyListeners();
+  }
+
   void updateTotalHistoryInformation(TripHistoryModel eachTripHistoryInformation) {
     historyInformationList.add(eachTripHistoryInformation);
     notifyListeners();
@@ -53,6 +58,7 @@ class AppInfo extends ChangeNotifier{
     driverAverageRating = driverRating;
     notifyListeners();
   }
+  
 
 
 

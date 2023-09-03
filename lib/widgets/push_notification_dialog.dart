@@ -171,8 +171,8 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                         // audioPlayer.pause();
                         // audioPlayer.stop();
                         // audioPlayer = AssetsAudioPlayer();
-                        Navigator.pushNamed(context, "/main_screen");
-                        Navigator.pop(context);
+                        // Navigator.pushNamed(context, "/main_screen");
+                        // Navigator.pop(context);
                         print("bwwwwwwwwwwwww "+FirebaseDatabase.instance.toString());
                         // Then ensures that all after the first firebase query, next one is executed
                         FirebaseDatabase.instance.ref()
@@ -195,7 +195,7 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                             .remove()
 
                         }).then((value) => {
-                          Navigator.pushNamed(context, "/main_screen"),
+                          Navigator.pop(context, "/main_screen"),
                           Fluttertoast.showToast(msg: "Ride request is cancelled, restarting app"),
                           
                         });

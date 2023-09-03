@@ -8,11 +8,14 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 
+import '../InfoHandler/app_info.dart';
 import '../assistants/assistant_methods.dart';
 
 import '../models/ride_request_information.dart';
 import '../widgets/progress_dialog.dart';
+import '../widgets/user_cancel_message_dialog.dart';
 
 class NewTripScreen extends StatefulWidget {
 
@@ -250,6 +253,25 @@ class _NewTripScreenState extends State<NewTripScreen> {
 
   @override
   Widget build(BuildContext context) {
+    DatabaseReference ref = FirebaseDatabase.instance.ref()
+                              .child("AllRideRequests")
+                              .child(widget.rideRequestInformation!.rideRequestId!)
+                              .child("status");
+          Stream<DatabaseEvent> stream = ref.onValue;                    
+         stream.listen((DatabaseEvent event) {
+            print('Event Type: ${event.type}'); // DatabaseEventType.value;
+  print('Snapshot: ${event.snapshot.value}'); // DataSnapshot
+  rideRequestStatus = event.snapshot.value.toString();
+   if (rideRequestStatus == "Cancelled"){
+                            showDialog(
+                               context: context,
+                                barrierDismissible: false,
+                                builder: (context) {
+                                 return const UserCancelMessageDialog();
+                     });
+                        }
+});
+        
     createActiveDriverIconMarker();
     return Scaffold(
       body: Stack(
@@ -466,6 +488,20 @@ class _NewTripScreenState extends State<NewTripScreen> {
                         // When driver has ended the trip - End Trip Button
                         else if(rideRequestStatus == "On Trip"){
                           endTrip();
+                        }
+                        if (rideRequestStatus == "Cancelled"){
+                            showDialog(
+                               context: context,
+                                barrierDismissible: false,
+                                builder: (context) {
+                                 return const UserCancelMessageDialog();
+                     });
+                  FirebaseDatabase.instance.ref()
+                              .child("AllRideRequests")
+                              .child(widget.rideRequestInformation!.rideRequestId!)
+                              .child("status")
+                              .set(rideRequestStatus);
+                               Provider.of<AppInfo>(context,listen: false).updateriderequeststatus("Cancelled");
                         }
                       },
 
