@@ -13,6 +13,13 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
   final FirebaseStorage _storage = FirebaseStorage.instance;
   final ImagePicker _imagePicker = ImagePicker();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  Map<String, File?> imageFiles = {
+    'image1.jpg': null,
+    'image2.jpg': null,
+    'image3.jpg': null,
+    'image4.jpg': null,
+    'image5.jpg': null,
+  };
 
   Future<void> uploadImage(File imageFile, String imageName) async {
     try {
@@ -34,8 +41,43 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
     final pickedFile = await _imagePicker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       File imageFile = File(pickedFile.path);
+      setState(() {
+        imageFiles[imageName] = imageFile;
+      });
       uploadImage(imageFile, imageName);
     }
+  }
+
+  Widget buildUploadButton(String buttonText, String imageName) {
+    return Column(
+      children: [
+        CircleAvatar(
+          radius: 30,
+          backgroundColor: Colors.grey[300],
+          child: imageFiles[imageName] != null
+              ? ClipOval(
+                  child: Image.file(
+                    imageFiles[imageName]!,
+                    width: 60,
+                    height: 60,
+                    fit: BoxFit.cover,
+                  ),
+                )
+              : null,
+        ),
+        SizedBox(height: 10),
+        ElevatedButton(
+          onPressed: () => pickAndUploadImage(imageName),
+          style: ElevatedButton.styleFrom(
+            primary: Colors.black, // Set the button color to black
+          ),
+          child: Text(
+            buttonText,
+            style: TextStyle(color: Colors.white), // Set text color to white for contrast
+          ),
+        ),
+      ],
+    );
   }
 
   @override
@@ -49,25 +91,32 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () => pickAndUploadImage('image1.jpg'),
-              child: Text('Upload Image 1'),
+             Text(
+              'Upload your Papiers', // Add the title here
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
+            SizedBox(height: 20),
+            buildUploadButton('Upload Image 1', 'image1.jpg'),
+            buildUploadButton('Upload Image 2', 'image2.jpg'),
+            buildUploadButton('Upload Image 3', 'image3.jpg'),
+            buildUploadButton('Upload Image 4', 'image4.jpg'),
+            buildUploadButton('Upload Image 5', 'image5.jpg'),
+            SizedBox(height: 20), // Add some spacing
             ElevatedButton(
-              onPressed: () => pickAndUploadImage('image2.jpg'),
-              child: Text('Upload Image 2'),
-            ),
-            ElevatedButton(
-              onPressed: () => pickAndUploadImage('image3.jpg'),
-              child: Text('Upload Image 3'),
-            ),
-            ElevatedButton(
-              onPressed: () => pickAndUploadImage('image4.jpg'),
-              child: Text('Upload Image 4'),
-            ),
-            ElevatedButton(
-              onPressed: () => pickAndUploadImage('image5.jpg'),
-              child: Text('Upload Image 5'),
+              onPressed: () {
+                // Navigate to the next main page
+                Navigator.pushNamed(context, "/main_screen");
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.black, // Set the button color to black
+              ),
+              child: Text(
+                'Save',
+                style: TextStyle(fontSize: 16, color: Colors.white), // Set text color to white for contrast
+              ),
             ),
           ],
         ),

@@ -80,7 +80,7 @@ class _FareAmountDialogState extends State<FareAmountDialog> {
                 padding: const EdgeInsets.all(10.0),
                 child: ElevatedButton(
                   onPressed: (){
-                    Navigator.pop(context);
+                    Navigator.pushNamed(context, "/main_screen");
                   },
 
                   style: ElevatedButton.styleFrom(

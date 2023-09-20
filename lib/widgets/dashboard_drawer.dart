@@ -59,23 +59,23 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
 
           const SizedBox(height: 12),
 
-          GestureDetector(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const TripHistoryScreen()));
-            },
+          // GestureDetector(
+          //   onTap: (){
+          //     Navigator.push(context, MaterialPageRoute(builder: (context) => const TripHistoryScreen()));
+          //   },
 
-            child: const ListTile(
-              leading: Icon(Icons.history, color: Colors.black),
-              title: Text(
-                "History",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16
-                ),
-              ),
-            ),
-          ),
+          //   child: const ListTile(
+          //     leading: Icon(Icons.history, color: Colors.black),
+          //     title: Text(
+          //       "History",
+          //       style: TextStyle(
+          //         color: Colors.black,
+          //         fontWeight: FontWeight.bold,
+          //         fontSize: 16
+          //       ),
+          //     ),
+          //   ),
+          // ),
 
 
 

@@ -5,9 +5,12 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/trip_history_model.dart';
+
 
 class EarningsTabPage extends StatefulWidget {
-  const EarningsTabPage({super.key});
+  TripHistoryModel? tripHistoryModel;
+   EarningsTabPage({this.tripHistoryModel});
 
 
 
@@ -87,8 +90,6 @@ class _EarningsTabPageState extends State<EarningsTabPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
-
                     ],
                   ),
                 ),
@@ -130,15 +131,15 @@ class _EarningsTabPageState extends State<EarningsTabPage> {
 
                     const SizedBox(height: 10,),
 
-                    Text(
-                        "TD ${Provider.of<AppInfo>(context,listen: false).lastTripHistoryInformationModel!.fareAmount}",
+                    // Text(
+                    //     "TD ${Provider.of<AppInfo>(context,listen: false).lastTripHistoryInformationModel!.fareAmount}",
                         
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: 50,
-                        )
-                    ),
+                    //     style: const TextStyle(
+                    //       fontWeight: FontWeight.bold,
+                    //       color: Colors.black,
+                    //       fontSize: 50,
+                    //     )
+                    // ),
                     const SizedBox(height: 10,),
 
                     const Divider(
@@ -160,14 +161,14 @@ class _EarningsTabPageState extends State<EarningsTabPage> {
 
                             const SizedBox(width: 5),
 
-                            Text(
-                                Provider.of<AppInfo>(context,listen: false).lastTripDirectionDetailsInformation!.distance_text!,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                  fontSize: 17,
-                                )
-                            ),
+                            // Text(
+                            //     Provider.of<AppInfo>(context,listen: false).lastTripDirectionDetailsInformation!.distance_text!,
+                            //     style: const TextStyle(
+                            //       fontWeight: FontWeight.bold,
+                            //       color: Colors.black,
+                            //       fontSize: 17,
+                            //     )
+                            // ),
                           ],
                         ),
 
@@ -182,14 +183,14 @@ class _EarningsTabPageState extends State<EarningsTabPage> {
 
                             const SizedBox(width: 5),
 
-                            Text(
-                               Provider.of<AppInfo>(context,listen: false).lastTripDirectionDetailsInformation!.duration_text!,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                )
-                            ),
+                            // Text(
+                            //    Provider.of<AppInfo>(context,listen: false).lastTripDirectionDetailsInformation!.duration_text!,
+                            //     style: const TextStyle(
+                            //       fontWeight: FontWeight.bold,
+                            //       color: Colors.black,
+                            //       fontSize: 15,
+                            //     )
+                            // ),
                           ],
                         )
                       ],
@@ -235,14 +236,14 @@ class _EarningsTabPageState extends State<EarningsTabPage> {
 
                     const SizedBox(height: 10,),
 
-                    Text(
-                        "Tk ${driverData.totalEarnings!}",
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: 50,
-                        )
-                    ),
+                    // Text(
+                    //     "Tk ${driverData.totalEarnings!}",
+                    //     style: const TextStyle(
+                    //       fontWeight: FontWeight.bold,
+                    //       color: Colors.black,
+                    //       fontSize: 50,
+                    //     )
+                    // ),
 
                     const SizedBox(height: 10,),
 

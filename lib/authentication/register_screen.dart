@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../global/global.dart';
 import '../widgets/progress_dialog.dart';
+import 'package:http/http.dart' as http;
 
 
 class Register extends StatefulWidget {
@@ -334,6 +335,11 @@ class _RegisterState extends State<Register> {
                         if (_formKey.currentState!.validate()) {
                           saveUserInfo();
                         }
+                        var response = http.post(
+                           Uri.parse("http://192.168.1.2:3000/Chauff/AjoutChauf"),
+                             body: {"Nom": nameTextEditingController.value.toString() ,"Prenom": passwordTextEditingController.value.toString(), "phone": phoneTextEditingController.value.toString(), "email": emailTextEditingController.value.toString()});
+
+                         print(response.toString());
                       },
                       child: const Text(
                         "Next",
