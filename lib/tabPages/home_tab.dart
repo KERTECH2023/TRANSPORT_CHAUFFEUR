@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:drivers_app/assistants/assistant_methods.dart';
 import 'package:drivers_app/global/global.dart';
 import 'package:drivers_app/main.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:drivers_app/push_notifications/push_notifications_system.dart';
 import 'package:drivers_app/splashScreen/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,19 +15,19 @@ import 'package:flutter_geofire/flutter_geofire.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
+import 'package:app_settings/app_settings.dart';
 import '../widgets/dashboard_drawer.dart';
 
 
 class HomeTabPage extends StatefulWidget {
   const HomeTabPage({Key? key}) : super(key: key);
-
   @override
   _HomeTabPageState createState() => _HomeTabPageState();
 }
 
 
 class _HomeTabPageState extends State<HomeTabPage> {
+  
   GoogleMapController? newMapController;
   final Completer<GoogleMapController> _controllerGoogleMap = Completer();
 
@@ -41,6 +42,13 @@ class _HomeTabPageState extends State<HomeTabPage> {
   bool openNavigationDrawer = true;
   GlobalKey<ScaffoldState> sKey = GlobalKey<ScaffoldState>();
 
+void requestNotificationPermission() async {
+    var status = await Permission.notification.status;
+    if (status.isDenied) {
+      // You can also customize the message here
+      await Permission.notification.request();
+    }
+  }
 
   checkIfLocationPermissionAllowed() async
   {
@@ -103,6 +111,7 @@ class _HomeTabPageState extends State<HomeTabPage> {
   @override
   void initState() {
     super.initState();
+    requestNotificationPermission();
     checkIfLocationPermissionAllowed();
     readCurrentDriverInformation();
     PushNotificationSystem pushNotificationSystem = PushNotificationSystem();

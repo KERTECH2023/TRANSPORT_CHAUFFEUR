@@ -2,11 +2,16 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:drivers_app/models/ride_request_information.dart';
 import 'package:drivers_app/widgets/push_notification_dialog.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_messaging/firebase_messaging.dart' as firebase_messaging;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:assets_audio_player/src/notification.dart';
+import 'package:firebase_messaging_platform_interface/src/notification_settings.dart';
 
 import '../global/global.dart';
 @pragma('vm:entry-point')
@@ -19,8 +24,29 @@ import '../global/global.dart';
   print("message data: "+ message.data["rideRequestId"].toString());
 }
 class PushNotificationSystem {
+   
   
   FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+  void requestNotificationPermission() async {
+  firebase_messaging.NotificationSettings settings =
+      await firebase_messaging.FirebaseMessaging.instance.requestPermission(
+    alert: true,
+    announcement: true,
+    badge: true,
+    carPlay: true,
+    criticalAlert: true,
+    provisional: true,
+    sound: true,
+  );
+
+  if (settings.authorizationStatus == firebase_messaging.AuthorizationStatus.authorized) {
+    print('User granted permission');
+  } else if (settings.authorizationStatus == firebase_messaging.AuthorizationStatus.provisional) {
+    print('User granted provisional permission');
+  } else {
+    print('User declined or has not accepted permission');
+  }
+}
 
   Future initializeCloudMessaging(BuildContext context) async{
     
@@ -61,6 +87,8 @@ retrieveRideRequestInformation(remoteMessage.data["rideRequestId"],context);
       }
     });
   }
+
+
 
   Future generateRegistrationToken() async{
     String? registrationToken = await firebaseMessaging.getToken(); // Generate and get registration token

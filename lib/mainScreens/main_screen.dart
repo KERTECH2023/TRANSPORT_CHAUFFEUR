@@ -5,6 +5,7 @@ import 'package:drivers_app/tabPages/ratings_tab.dart';
 import 'package:flutter/material.dart';
 
 import '../assistants/assistant_methods.dart';
+import '../push_notifications/push_notifications_system.dart';
 
 class MainScreen extends StatefulWidget
 {
@@ -15,6 +16,8 @@ class MainScreen extends StatefulWidget
 
 class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateMixin
 {
+  PushNotificationSystem notificationServices = PushNotificationSystem();
+
   TabController? tabController;
   int selectedIndex = 0;
 
@@ -30,7 +33,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
-
+    notificationServices.requestNotificationPermission();
     tabController = TabController(length: 4, vsync: this);
   }
 
