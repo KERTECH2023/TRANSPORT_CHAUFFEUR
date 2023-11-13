@@ -94,6 +94,17 @@ void requestNotificationPermission() async {
            driverData.carType = (snapshot.value as Map)["carDetails"]["carType"];
            driverData.lastTripId = (snapshot.value as Map)["lastTripId"];
            driverData.totalEarnings = (snapshot.value as Map)["totalEarnings"];
+           driverData.Cstatus = (snapshot.value as Map)["Cstatus"];
+           driverData.DateNaissance = (snapshot.value as Map)["DateNaissance"];
+           driverData.address = (snapshot.value as Map)["address"];
+           
+           driverData.cnicNo = (snapshot.value as Map)["cnicNo"];
+           driverData.gender = (snapshot.value as Map)["gender"];
+           driverData.licence = (snapshot.value as Map)["licence"];
+           driverData.postalCode = (snapshot.value as Map)["postalCode"];
+           
+           
+
          }
 
     });

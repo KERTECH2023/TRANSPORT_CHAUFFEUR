@@ -1,10 +1,13 @@
+import 'package:drivers_app/localization/language.dart';
+import 'package:drivers_app/main.dart';
 import 'package:drivers_app/tabPages/earning_tab.dart';
 import 'package:drivers_app/tabPages/home_tab.dart';
 import 'package:drivers_app/tabPages/profile_tab.dart';
 import 'package:drivers_app/tabPages/ratings_tab.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../assistants/assistant_methods.dart';
+import '../localization/language_constants.dart';
 import '../push_notifications/push_notifications_system.dart';
 
 class MainScreen extends StatefulWidget
@@ -40,6 +43,42 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+          appBar: AppBar(
+        title: Text(AppLocalizations.of(context)!.homePage),
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DropdownButton<Language>(
+              underline: const SizedBox(),
+              icon: const Icon(
+                Icons.language,
+                color: Colors.white,
+              ),
+              onChanged: (Language? language) async {
+                if (language != null) {
+                  Locale _locale = await setLocale(language.languageCode);
+                  MyApp.setLocale(context, _locale);
+                }
+              },
+              items: Language.languageList().map<DropdownMenuItem<Language>>(
+                (e) => DropdownMenuItem<Language>(
+                  value: e,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Text(
+                        e.flag,
+                        style: const TextStyle(fontSize: 30),
+                      ),
+                      Text(e.name)
+                    ],
+                  ),
+                ),
+              ).toList(),
+            ),
+          ),
+        ],
+      ),
       body: TabBarView(
         physics: const NeverScrollableScrollPhysics(),
         controller: tabController,

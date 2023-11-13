@@ -9,6 +9,14 @@ class DriverData{
   String? carType;
   String? lastTripId;
   String? totalEarnings;
+  String? Cstatus;
+  String? DateNaissance;
+  String? address;
+  
+  String? cnicNo;
+  String? gender;
+  String? licence;
+  String? postalCode;
 
   DriverData({
     this.id,
@@ -20,7 +28,16 @@ class DriverData{
     this.carNumber,
     this.carType,
     this.lastTripId,
-    this.totalEarnings
+    this.totalEarnings,
+    this.Cstatus,
+    this.DateNaissance,
+    this.address,
+    
+    this.cnicNo,
+    this.gender,
+    this.licence,
+    this.postalCode
+
   });
 
 

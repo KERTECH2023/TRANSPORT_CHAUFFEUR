@@ -14,23 +14,50 @@ import 'authentication/login_screen.dart';
 import 'authentication/register_screen.dart';
 import 'authentication/upload_image.dart';
 import 'mainScreens/main_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
-
-void main() async{
- 
-
-
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-   await Firebase.initializeApp();
+  // await AssistantMethods.initNotification();
 
+  await Firebase.initializeApp();
+  
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => AppInfo(),
+      child: MyApp(),
+    ),
+  );
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+  @override
+  _MyAppState createState() => _MyAppState();
+   static void setLocale(BuildContext context, Locale newLocale) {
+    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
+    state?.setLocale(newLocale);
+  }
+
+  
+}
+
+class _MyAppState extends State<MyApp> {
+    Locale? _locale;
+
+  setLocale(Locale locale) {
+    setState(() {
+      _locale = locale;
+    });
+  }
     
   
-  runApp(ChangeNotifierProvider(
-    create: (context) => AppInfo(),
-    child: GetMaterialApp(
-        initialRoute: '/',
-        routes: {
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      initialRoute: '/',
+      routes: {
           '/' : (context) => MySplashScreen(),
           '/main_screen': (context) => MainScreen(),
           '/phone_signin': (context) => Phonesignin(),
@@ -41,14 +68,16 @@ void main() async{
           '/car_info_screen': (context) => CarInfoScreen(),
           '/new_trip_screen': (context) => NewTripScreen(),
         },
-        //home: Home(),
-        debugShowCheckedModeBanner: false
-    ),
-  ));
+        
+       localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: _locale,
+      debugShowCheckedModeBanner: false,
+    );
 }
 
 
-
+}
 
 
 

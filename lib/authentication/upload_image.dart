@@ -80,13 +80,22 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
     );
   }
 
+  void _showUploadErrorSnackbar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Please upload all images before saving.'),
+        duration: Duration(seconds: 3),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Image Upload'),
       ),
-      body: SingleChildScrollView( // Wrap the entire content with SingleChildScrollView
+      body: SingleChildScrollView(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -103,7 +112,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
               Column(
                 children: [
                   Text(
-                    'Add Your CIN (Recto) ', // Description for Image 1
+                    'Add Your CIN (Recto) ',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -115,7 +124,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
               Column(
                 children: [
                   Text(
-                    'Add Your CIN (Verso)', // Description for Image 2
+                    'Add Your CIN (Verso)',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -127,7 +136,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
               Column(
                 children: [
                   Text(
-                    'Add your permit', // Description for Image 3
+                    'Add your permit',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -139,7 +148,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
               Column(
                 children: [
                   Text(
-                    'Add your Insurance', // Description for Image 4
+                    'Add your Insurance',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -151,7 +160,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
               Column(
                 children: [
                   Text(
-                    'Add your gray card ', // Description for Image 5
+                    'Add your gray card ',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -160,18 +169,23 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                   buildUploadButton('Upload Image 5', 'image5.jpg'),
                 ],
               ),
-              SizedBox(height: 20), // Add some spacing
+              SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Navigate to the next main page
-                  Navigator.pushNamed(context, "/main_screen");
+                  bool allImagesUploaded = imageFiles.values.every((file) => file != null);
+
+                  if (allImagesUploaded) {
+                    Navigator.pushNamed(context, "/main_screen");
+                  } else {
+                    _showUploadErrorSnackbar();
+                  }
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.black, // Set the button color to black
+                  primary: Colors.black,
                 ),
                 child: Text(
                   'Save',
-                  style: TextStyle(fontSize: 16, color: Colors.white), // Set text color to white for contrast
+                  style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
               ),
             ],
