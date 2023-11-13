@@ -54,6 +54,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
   String durationFromSourceToDestination = "";
 
   bool isRequestDirectionDetails = false;
+  bool dialogDisplayed = false; 
 
   // When driver accepts ride request, sourceLatLng = driver Current Location, destinationLatLng = driver pickup Location
   // When driver starts the ride, sourceLatLng = User Current Location, destinationLatLng = User Dropoff Location
@@ -262,11 +263,12 @@ class _NewTripScreenState extends State<NewTripScreen> {
             print('Event Type: ${event.type}'); // DatabaseEventType.value;
   print('Snapshot: ${event.snapshot.value}'); // DataSnapshot
   rideRequestStatus = event.snapshot.value.toString();
-   if (rideRequestStatus == "Cancelled"){
+   if (rideRequestStatus == "Cancelled" && !dialogDisplayed ){
                             showDialog(
                                context: context,
                                 barrierDismissible: false,
                                 builder: (context) {
+                                    dialogDisplayed = true;
                                  return const UserCancelMessageDialog();
                      });
                         }

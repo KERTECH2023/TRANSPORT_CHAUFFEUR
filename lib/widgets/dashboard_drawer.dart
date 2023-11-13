@@ -7,9 +7,10 @@ import 'package:drivers_app/mainScreens/profile_screen.dart';
 import 'package:drivers_app/mainScreens/trip_history_screen.dart';
 
 class DashboardDrawer extends StatefulWidget {
-  String? name;
+ final String? name;
 
   DashboardDrawer({this.name});
+  
 
   @override
   State<DashboardDrawer> createState() => _DashboardDrawerState();
@@ -41,11 +42,13 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        widget.name.toString(),
+                        
+                        driverData.name!,
+                      
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white
+                          color: Color.fromARGB(255, 255, 255, 255)
                         ),
                       ),
 
@@ -105,7 +108,7 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
             },
 
             child: const ListTile(
-              leading: Icon(Icons.logout, color: Colors.black),
+              leading: Icon(Icons.delete, color: Colors.black),
               title: Text(
                 "Delete Account",
                 style: TextStyle(

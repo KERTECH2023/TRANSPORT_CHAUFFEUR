@@ -86,39 +86,96 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
       appBar: AppBar(
         title: Text('Image Upload'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-             Text(
-              'Upload your Papiers', // Add the title here
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+      body: SingleChildScrollView( // Wrap the entire content with SingleChildScrollView
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Upload your Papiers',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            SizedBox(height: 20),
-            buildUploadButton('Upload Image 1', 'image1.jpg'),
-            buildUploadButton('Upload Image 2', 'image2.jpg'),
-            buildUploadButton('Upload Image 3', 'image3.jpg'),
-            buildUploadButton('Upload Image 4', 'image4.jpg'),
-            buildUploadButton('Upload Image 5', 'image5.jpg'),
-            SizedBox(height: 20), // Add some spacing
-            ElevatedButton(
-              onPressed: () {
-                // Navigate to the next main page
-                Navigator.pushNamed(context, "/main_screen");
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.black, // Set the button color to black
+              SizedBox(height: 20),
+              Column(
+                children: [
+                  Text(
+                    'Add Your CIN (Recto) ', // Description for Image 1
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  buildUploadButton('Upload Image 1', 'image1.jpg'),
+                ],
               ),
-              child: Text(
-                'Save',
-                style: TextStyle(fontSize: 16, color: Colors.white), // Set text color to white for contrast
+              Column(
+                children: [
+                  Text(
+                    'Add Your CIN (Verso)', // Description for Image 2
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  buildUploadButton('Upload Image 2', 'image2.jpg'),
+                ],
               ),
-            ),
-          ],
+              Column(
+                children: [
+                  Text(
+                    'Add your permit', // Description for Image 3
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  buildUploadButton('Upload Image 3', 'image3.jpg'),
+                ],
+              ),
+              Column(
+                children: [
+                  Text(
+                    'Add your Insurance', // Description for Image 4
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  buildUploadButton('Upload Image 4', 'image4.jpg'),
+                ],
+              ),
+              Column(
+                children: [
+                  Text(
+                    'Add your gray card ', // Description for Image 5
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  buildUploadButton('Upload Image 5', 'image5.jpg'),
+                ],
+              ),
+              SizedBox(height: 20), // Add some spacing
+              ElevatedButton(
+                onPressed: () {
+                  // Navigate to the next main page
+                  Navigator.pushNamed(context, "/main_screen");
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.black, // Set the button color to black
+                ),
+                child: Text(
+                  'Save',
+                  style: TextStyle(fontSize: 16, color: Colors.white), // Set text color to white for contrast
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

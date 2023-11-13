@@ -76,7 +76,7 @@ class _UserCancelMessageDialogState extends State<UserCancelMessageDialog> {
                 padding: const EdgeInsets.all(10.0),
                 child: ElevatedButton(
                   onPressed: (){
-                    Navigator.pop(context, '/main_screen');
+                    Navigator.popAndPushNamed(context, '/main_screen');
                   },
 
                   style: ElevatedButton.styleFrom(

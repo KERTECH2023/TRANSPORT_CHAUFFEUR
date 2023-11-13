@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -49,7 +50,14 @@ String usertoken="";
           password:passwordTextEditingController.text.trim()
         ).catchError((message){
           Navigator.pop(context);
-          Fluttertoast.showToast(msg: "Error" + message);
+           AwesomeDialog(
+      context: context,
+      dialogType: DialogType.error,
+      animType: AnimType.rightSlide,
+      title: 'Error',
+      desc: "Invalid email or password. Please try again.",
+    ).show();
+   
         })
     ).user;
 
@@ -284,12 +292,61 @@ void handlePhoneNumberLogin() {
                         return "The field is empty";
                       }
 
-                      else
+                      else {
                         return null;
+                      }
                     },
 
                   ),
-                    
+                    InkWell(
+                    onTap: () async {
+                      if (emailTextEditingController.text == ""){
+                        AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.error,
+                          animType: AnimType.rightSlide,
+                          title: 'Error',
+                          desc: "Please fill out your email then click on Forget Password",
+                          ).show();
+                          return;
+                          }
+                          try {
+                      await FirebaseAuth.instance.sendPasswordResetEmail(email: emailTextEditingController.text);
+                         AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.success,
+                          animType: AnimType.rightSlide,
+                          title: 'Succes',
+                          desc: "A mail has been sent to your email , Click on the link to change your Password",
+                          ).show();
+                          } catch (e){
+                             AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.error,
+                          animType: AnimType.rightSlide,
+                          title: 'Error',
+                          desc: "Please verify the email that you have entered",
+                          ).show();
+
+
+                          }
+
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 10, bottom:  20),
+                      alignment:Alignment.topRight,
+                      child: const Text(
+                        "Forget password?",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      ),
+                  
+                  
+                  
+                    ),
+                  ), 
                   const SizedBox(height: 20),
 
                   ElevatedButton(

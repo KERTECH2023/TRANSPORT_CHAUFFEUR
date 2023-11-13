@@ -67,7 +67,8 @@ void requestNotificationPermission() async {
     CameraPosition cameraPosition = CameraPosition(target:latLngPosition, zoom: 16);
     newMapController!.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
 
-    //userName = currentUserInfo!.name!;
+    userName = currentUserInfo!.name!;
+    
     String humanReadableAddress = await AssistantMethods.searchAddressForGeographicCoordinates(driverCurrentPosition!,context);
     print("this is your address = " + humanReadableAddress);
   }
@@ -99,7 +100,7 @@ void requestNotificationPermission() async {
 
     AssistantMethods.getLastTripInformation(context);
 
-    //currentFirebaseUser = firebaseAuth.currentUser;
+    currentFirebaseUser = firebaseAuth.currentUser;
     PushNotificationSystem pushNotificationSystem = PushNotificationSystem();
     pushNotificationSystem.initializeCloudMessaging(context);
     pushNotificationSystem.generateRegistrationToken();
@@ -111,6 +112,7 @@ void requestNotificationPermission() async {
   @override
   void initState() {
     super.initState();
+    print("usssssssssssssssserr" + userName.toString());
     requestNotificationPermission();
     checkIfLocationPermissionAllowed();
     readCurrentDriverInformation();
