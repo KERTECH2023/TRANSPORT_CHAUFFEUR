@@ -164,7 +164,7 @@ retrieveRideRequestInformation(remoteMessage.data["rideRequestId"],context);
     }
     else {
       Fluttertoast.showToast(msg: "this Ride request  has been cancelled");
-      Navigator.pop(context);
+      Navigator.popAndPushNamed(context, "/main_screen");
     }
     });
 

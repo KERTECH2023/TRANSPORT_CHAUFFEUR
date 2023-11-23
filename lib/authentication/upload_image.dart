@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ImageUploadScreen extends StatefulWidget {
   @override
   _ImageUploadScreenState createState() => _ImageUploadScreenState();
@@ -83,7 +83,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
   void _showUploadErrorSnackbar() {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Please upload all images before saving.'),
+        content: Text(AppLocalizations.of(context)!.pleaseupload),
         duration: Duration(seconds: 3),
       ),
     );
@@ -93,7 +93,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Image Upload'),
+        title: Text(AppLocalizations.of(context)!.imageUpload),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -102,7 +102,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Upload your Papiers',
+                AppLocalizations.of(context)!.uploadyourpapiers,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -112,7 +112,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
               Column(
                 children: [
                   Text(
-                    'Add Your CIN (Recto) ',
+                    AppLocalizations.of(context)!.addYourCIN,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -124,7 +124,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
               Column(
                 children: [
                   Text(
-                    'Add Your CIN (Verso)',
+                    AppLocalizations.of(context)!.addYourCINv,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -136,7 +136,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
               Column(
                 children: [
                   Text(
-                    'Add your permit',
+                    AppLocalizations.of(context)!.addyourpermit,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -148,7 +148,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
               Column(
                 children: [
                   Text(
-                    'Add your Insurance',
+                    AppLocalizations.of(context)!.addyourInsurance,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -160,7 +160,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
               Column(
                 children: [
                   Text(
-                    'Add your gray card ',
+                    AppLocalizations.of(context)!.addyourgraycard,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -184,7 +184,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                   primary: Colors.black,
                 ),
                 child: Text(
-                  'Save',
+                  AppLocalizations.of(context)!.submit,
                   style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
               ),

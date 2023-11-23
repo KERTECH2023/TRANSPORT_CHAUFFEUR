@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../global/global.dart';
 import '../models/ride_request_information.dart';
 
@@ -53,8 +53,8 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
             const SizedBox(height: 10),
 
             // New Ride Request Text
-            const Text(
-              "New Ride Request",
+             Text(
+               AppLocalizations.of(context)!.newRideequest,
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -195,7 +195,7 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                             .remove()
 
                         }).then((value) => {
-                          Navigator.pop(context, "/main_screen"),
+                          Navigator.popAndPushNamed(context, "/main_screen"),
                           Fluttertoast.showToast(msg: "Ride request is cancelled, restarting app"),
                           
                         });
@@ -204,8 +204,8 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                         Navigator.pop(context);
 
                       },
-                      child: const Text(
-                        "Cancel",
+                      child:  Text(
+                        AppLocalizations.of(context)!.cancel,
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -232,8 +232,8 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                         Navigator.push(context, MaterialPageRoute(builder: (c)=> NewTripScreen(rideRequestInformation: widget.rideRequestInformation,)));
 
                       },
-                      child: const Text(
-                        "Accept",
+                      child:  Text(
+                        AppLocalizations.of(context)!.accept,
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -299,15 +299,15 @@ print("ffffffffff"+snapData.snapshot.value.toString());
 
   }
 
-  Future generateAndGetToken() async {
-    String? registrationToken = await FirebaseMessaging.instance.getToken();
-    print("FCM regetration token : ${registrationToken}");
+  // Future generateAndGetToken() async {
+  //   String? registrationToken = await FirebaseMessaging.instance.getToken();
+  //   print("FCM regetration token : ${registrationToken}");
 
-    FirebaseDatabase.instance.ref().child("Drivers").child(firebaseAuth.currentUser!.uid).child("token").set(registrationToken);
-     firebaseMessaging.subscribeToTopic("allDrivers");
-    firebaseMessaging.subscribeToTopic("allUsers");
+  //   FirebaseDatabase.instance.ref().child("Drivers").child(firebaseAuth.currentUser!.uid).child("token").set(registrationToken);
+  //    firebaseMessaging.subscribeToTopic("allDrivers");
+  //   firebaseMessaging.subscribeToTopic("allUsers");
 
 
-  }
+  // }
   
 }

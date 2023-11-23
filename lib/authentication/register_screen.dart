@@ -1,9 +1,17 @@
+import 'dart:io';
+
+import 'package:drivers_app/localization/language_constants.dart';
+import 'package:drivers_app/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import '../global/global.dart';
+import '../localization/language.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../widgets/progress_dialog.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,14 +34,14 @@ class _RegisterState extends State<Register> {
   TextEditingController postalCodeController = TextEditingController();
   TextEditingController licenceController = TextEditingController();
   TextEditingController cnicNoController = TextEditingController();
-
+  final ImagePicker _imagePicker = ImagePicker();
   final _formKey = GlobalKey<FormState>();
 
   bool isPasswordVisible = true;
   DateTime? selectedDate;
    bool cStatus = false; 
   String? selectedGender;
-
+   File? _imageFile;
   List<String> genderOptions = ["Homme", "Femme"];
 
   @override
@@ -56,7 +64,7 @@ class _RegisterState extends State<Register> {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          return ProgressDialog(message: "Processing, Please wait");
+          return ProgressDialog(message: AppLocalizations.of(context)!.processingPleasewait);
         });
 
     final User? firebaseUser = (await firebaseAuth
@@ -68,7 +76,14 @@ class _RegisterState extends State<Register> {
           Fluttertoast.showToast(msg: "Error" + message.toString());
         }))
         .user;
+       if (firebaseUser != null) {
+      String? imageUrl;
 
+      if (_imageFile != null) {
+        final storageRef = FirebaseStorage.instance.ref().child('chauffeur_images/${firebaseUser.uid}.jpg');
+        await storageRef.putFile(_imageFile!);
+        imageUrl = await storageRef.getDownloadURL();
+      }
     if (firebaseUser != null) {
       Map userMap = {
         'id': firebaseUser.uid,
@@ -82,6 +97,7 @@ class _RegisterState extends State<Register> {
         'postalCode': postalCodeController.text.trim(),
         'licence': licenceController.text.trim(),
         'cnicNo': cnicNoController.text.trim(),
+        'imageUrl': imageUrl,
       };
 
       DatabaseReference databaseReference =
@@ -89,11 +105,11 @@ class _RegisterState extends State<Register> {
       databaseReference.child(firebaseUser.uid).set(userMap);
 
       currentFirebaseUser = firebaseUser;
-      Fluttertoast.showToast(msg: "Account has been created");
+      Fluttertoast.showToast(msg: AppLocalizations.of(context)!.accounthasbeencreated);
       Navigator.pushNamed(context, '/car_info_screen');
-    } else {
+    }} else {
       Navigator.pop(context);
-      Fluttertoast.showToast(msg: "Account has not been created");
+      Fluttertoast.showToast(msg: AppLocalizations.of(context)!.accounthasnotbeencreated);
     }
   }
 
@@ -117,6 +133,43 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+            appBar: AppBar(
+               backgroundColor: Color.fromARGB(255, 0, 0, 0),
+        title: Text(AppLocalizations.of(context)!.homePage),
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DropdownButton<Language>(
+              underline: const SizedBox(),
+              icon: const Icon(
+                Icons.language,
+                color: Colors.white,
+              ),
+              onChanged: (Language? language) async {
+                if (language != null) {
+                  Locale _locale = await setLocale(language.languageCode);
+                  MyApp.setLocale(context, _locale);
+                }
+              },
+              items: Language.languageList().map<DropdownMenuItem<Language>>(
+                (e) => DropdownMenuItem<Language>(
+                  value: e,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Text(
+                        e.flag,
+                        style: const TextStyle(fontSize: 30),
+                      ),
+                      Text(e.name)
+                    ],
+                  ),
+                ),
+              ).toList(),
+            ),
+          ),
+        ],
+      ),
       backgroundColor: Colors.white,
       body: Form(
         key: _formKey,
@@ -126,13 +179,29 @@ class _RegisterState extends State<Register> {
               padding: const EdgeInsets.all(25.0),
               child: Column(
                 children: [
-                  Image.asset("images/logofi.png"),
-                  const Text(
-                    "Register as a Driver",
-                    style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
+                   const SizedBox(height: 20),
+                  CircleAvatar(
+                    
+                    radius: 60,
+                    backgroundImage: _imageFile != null ? FileImage(_imageFile!) : null,
+                    child: InkWell(
+                      onTap: () async {
+                         final pickedFile = await _imagePicker.pickImage(source: ImageSource.gallery);
+
+                        if (pickedFile != null) {
+                          setState(() {
+                            _imageFile = File(pickedFile.path);
+                          });
+                        }
+                      },
+                      child: _imageFile == null
+                          ? Icon(
+                              Icons.camera_alt,
+                              size: 40,
+                              color: Colors.white,
+                            )
+                          : null,
+                    ),
                   ),
                   const SizedBox(height: 20),
 
@@ -142,8 +211,8 @@ class _RegisterState extends State<Register> {
                       color: Colors.black,
                     ),
                     decoration: InputDecoration(
-                      labelText: "Name",
-                      hintText: "Name",
+                     labelText:  AppLocalizations.of(context)!.name,
+                      hintText:  AppLocalizations.of(context)!.name,
                       prefixIcon: const Icon(Icons.person),
                       suffixIcon: nameTextEditingController.text.isEmpty
                           ? Container(width: 0)
@@ -165,7 +234,7 @@ class _RegisterState extends State<Register> {
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "The field is empty";
+                        return  AppLocalizations.of(context)!.fieldIsEmpty;
                       } else
                         return null;
                     },
@@ -180,8 +249,8 @@ class _RegisterState extends State<Register> {
                       color: Colors.black,
                     ),
                     decoration: InputDecoration(
-                      labelText: "Email",
-                      hintText: "Email",
+                     labelText:  AppLocalizations.of(context)!.email,
+                      hintText:  AppLocalizations.of(context)!.emailHint,
                       prefixIcon: Icon(Icons.email),
                       suffixIcon:
                           emailTextEditingController.text.isEmpty
@@ -202,12 +271,16 @@ class _RegisterState extends State<Register> {
                       labelStyle: const TextStyle(
                           color: Colors.black, fontSize: 15),
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "The field is empty";
-                      } else if (!value.contains('@')) {
-                        return "Invalid Email Address";
-                      } else
+                    validator: (value){
+                      if(value!.isEmpty){
+                        return  AppLocalizations.of(context)!.fieldIsEmpty;
+                      }
+
+                      else if (!value.contains('@')) {
+                        return  AppLocalizations.of(context)!.invalidEmailAddress;
+                      }
+
+                      else
                         return null;
                     },
                   ),
@@ -221,8 +294,8 @@ class _RegisterState extends State<Register> {
                       color: Colors.black,
                     ),
                     decoration: InputDecoration(
-                      labelText: "Phone Number",
-                      hintText: "Phone Number",
+                  labelText:  AppLocalizations.of(context)!.hint,
+                      hintText:  AppLocalizations.of(context)!.hint,
                       prefixIcon: Icon(Icons.phone),
                       suffixIcon: phoneTextEditingController.text.isEmpty
                           ? Container(width: 0)
@@ -242,12 +315,16 @@ class _RegisterState extends State<Register> {
                       labelStyle: const TextStyle(
                           color: Colors.black, fontSize: 15),
                     ),
-                    validator: (value) {
+                     validator: (value){
                       if (value!.isEmpty) {
-                        return "The field is empty";
-                      } else if (value.length != 12) {
-                        return "Enter Correct Number";
-                      } else
+                        return  AppLocalizations.of(context)!.fieldIsEmpty;
+                      }
+
+                      else if (value.length != 12) {
+                        return AppLocalizations.of(context)!.correctnum;
+                      }
+
+                      else
                         return null;
                     },
                   ),
@@ -301,8 +378,8 @@ class _RegisterState extends State<Register> {
                       color: Colors.black,
                     ),
                     decoration: InputDecoration(
-                      labelText: "Address",
-                      hintText: "Address",
+                      labelText: AppLocalizations.of(context)!.address,
+                      hintText: AppLocalizations.of(context)!.address,
                     prefixIcon: Icon(Icons.streetview),
                       suffixIcon: addressController.text.isEmpty
                           ? Container(width: 0)
@@ -324,7 +401,7 @@ class _RegisterState extends State<Register> {
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "The field is empty";
+                        return AppLocalizations.of(context)!.fieldIsEmpty;
                       } else
                         return null;
                     },
@@ -338,8 +415,8 @@ class _RegisterState extends State<Register> {
                       color: Colors.black,
                     ),
                     decoration: InputDecoration(
-                      labelText: "Postal Code",
-                      hintText: "Postal Code",
+                      labelText: AppLocalizations.of(context)!.postalCode,
+                      hintText: AppLocalizations.of(context)!.postalCode,
                     prefixIcon: Icon(Icons.post_add),
                       suffixIcon: postalCodeController.text.isEmpty
                           ? Container(width: 0)
@@ -361,7 +438,7 @@ class _RegisterState extends State<Register> {
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "The field is empty";
+                        return AppLocalizations.of(context)!.fieldIsEmpty;
                       } else
                         return null;
                     },
@@ -375,8 +452,8 @@ class _RegisterState extends State<Register> {
                       color: Colors.black,
                     ),
                     decoration: InputDecoration(
-                      labelText: "Licence",
-                      hintText: "Licence",
+                      labelText: AppLocalizations.of(context)!.licence,
+                      hintText: AppLocalizations.of(context)!.licence,
                   prefixIcon: Icon(Icons.numbers),
                       suffixIcon: licenceController.text.isEmpty
                           ? Container(width: 0)
@@ -398,9 +475,9 @@ class _RegisterState extends State<Register> {
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "The field is empty";
+                        return AppLocalizations.of(context)!.fieldIsEmpty;
                       } else if (value.length != 5) {
-                        return "Enter Correct Number";
+                        return AppLocalizations.of(context)!.correctnum;
                       } else
                         return null;
                     },
@@ -413,8 +490,8 @@ class _RegisterState extends State<Register> {
                       color: Colors.black,
                     ),
                     decoration: InputDecoration(
-                      labelText: "CNIC Number",
-                      hintText: "CNIC Number",
+                      labelText: AppLocalizations.of(context)!.cNICNumber,
+                      hintText: AppLocalizations.of(context)!.cNICNumber,
                    prefixIcon: Icon(Icons.label_important_outline),
                       suffixIcon: cnicNoController.text.isEmpty
                           ? Container(width: 0)
@@ -436,7 +513,7 @@ class _RegisterState extends State<Register> {
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "The field is empty";
+                        return AppLocalizations.of(context)!.fieldIsEmpty;
                       } else
                         return null;
                     },
@@ -452,8 +529,8 @@ class _RegisterState extends State<Register> {
                       color: Colors.black,
                     ),
                     decoration: InputDecoration(
-                      labelText: "Password",
-                      hintText: "Password",
+                      labelText:AppLocalizations.of(context)!.password,
+                      hintText: AppLocalizations.of(context)!.password,
                       prefixIcon: const Icon(Icons.lock),
                       suffixIcon: IconButton(
                           icon: isPasswordVisible
@@ -483,9 +560,9 @@ class _RegisterState extends State<Register> {
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "The field is empty";
+                        return AppLocalizations.of(context)!.fieldIsEmpty;
                       } else if (value.length < 6) {
-                        return "Password too short";
+                        return AppLocalizations.of(context)!.passwordtooshort;
                       } else
                         return null;
                     },
@@ -508,12 +585,12 @@ class _RegisterState extends State<Register> {
                           color: Colors.black,
                         ),
                         decoration: InputDecoration(
-                          labelText: "Date of Birth",
-                          hintText: "Date of Birth",
+                          labelText: AppLocalizations.of(context)!.dateOfBirth,
+                          hintText:  AppLocalizations.of(context)!.dateOfBirth,
                         ),
                         validator: (value) {
                           if (selectedDate == null) {
-                            return "Select Date of Birth";
+                            return AppLocalizations.of(context)!.selectDateofBirth;
                           }
                           return null;
                         },
@@ -537,12 +614,12 @@ class _RegisterState extends State<Register> {
                       });
                     },
                     decoration: InputDecoration(
-                      labelText: "Gender",
-                      hintText: "Gender",
+                      labelText: AppLocalizations.of(context)!.gender,
+                      hintText: AppLocalizations.of(context)!.gender,
                     ),
                     validator: (value) {
                       if (value == null) {
-                        return "Select Gender";
+                        return AppLocalizations.of(context)!.selectGender;
                       }
                       return null;
                     },
@@ -579,8 +656,8 @@ class _RegisterState extends State<Register> {
                             });
                         print(response.toString());
                       },
-                      child: const Text(
-                        "Next",
+                      child:  Text(
+                        AppLocalizations.of(context)!.next,
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       )),
 
@@ -588,8 +665,8 @@ class _RegisterState extends State<Register> {
                       onPressed: () {
                         Navigator.pushNamed(context, '/login_screen');
                       },
-                      child: const Text(
-                        "Already have an account? Login Now",
+                      child:  Text(
+                        AppLocalizations.of(context)!.alreadyhaveanaccountLoginNow,
                         style: TextStyle(color: Colors.black),
                       ))
                 ],

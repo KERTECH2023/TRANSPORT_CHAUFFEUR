@@ -9,7 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../InfoHandler/app_info.dart';
 import '../assistants/assistant_methods.dart';
 
@@ -62,7 +62,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
   Future<void> drawPolylineFromSourceToDestination(LatLng sourceLatLng,LatLng destinationLatLng) async{
     showDialog(
         context: context,
-        builder: (BuildContext context) => ProgressDialog(message: 'Please wait..',)
+        builder: (BuildContext context) => ProgressDialog(message: AppLocalizations.of(context)!.processingPleasewait,)
     );
 
     var directionDetailsInfo = await AssistantMethods.getOriginToDestinationDirectionDetails(sourceLatLng,destinationLatLng);
@@ -171,7 +171,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context){
-          return ProgressDialog(message: "Please wait");
+          return ProgressDialog(message: AppLocalizations.of(context)!.processingPleasewait);
         });
 
     var currentDriverPositionLatLng = LatLng(driverLiveLocation!.latitude, driverLiveLocation!.longitude);

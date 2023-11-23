@@ -3,7 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_star_rating_nsafe/smooth_star_rating.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../InfoHandler/app_info.dart';
 
 
@@ -71,8 +71,8 @@ class _RatingsTabPageState extends State<RatingsTabPage> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: const Text(
-          "Your Rating",
+        title:  Text(
+           AppLocalizations.of(context)!.rateDriver,
           style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 15,
@@ -140,9 +140,9 @@ class _RatingsTabPageState extends State<RatingsTabPage> {
 
               const SizedBox(height: 15.0,),
 
-              const Center(
+               Center(
                 child: Text(
-                  "This is the average rating of your\ntotal trips",
+                   AppLocalizations.of(context)!.ratingavv,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.grey,
@@ -166,7 +166,7 @@ class _RatingsTabPageState extends State<RatingsTabPage> {
               const SizedBox(height: 10.0,),
 
               Text(
-                "Rating: " + driverRating.toString(),
+                 AppLocalizations.of(context)!.rating + driverRating.toString(),
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -177,7 +177,7 @@ class _RatingsTabPageState extends State<RatingsTabPage> {
               const SizedBox(height: 10.0),
 
               Text(
-                "Driver Type: " + titleStarRating,
+                AppLocalizations.of(context)!.drivertype + titleStarRating,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,

@@ -2,7 +2,7 @@ import 'package:drivers_app/global/global.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class FareAmountDialog extends StatefulWidget {
 
   double? fareAmount;
@@ -35,8 +35,8 @@ class _FareAmountDialogState extends State<FareAmountDialog> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                "Trip Fare Amount",
+               Text(
+                AppLocalizations.of(context)!.tripFareAmount,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
@@ -80,15 +80,15 @@ class _FareAmountDialogState extends State<FareAmountDialog> {
                 padding: const EdgeInsets.all(10.0),
                 child: ElevatedButton(
                   onPressed: (){
-                    Navigator.pushNamed(context, "/main_screen");
+                    Navigator.popAndPushNamed(context, "/main_screen");
                   },
 
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.redAccent
                   ),
 
-                  child: const Text(
-                    "Collect Cash",
+                  child:  Text(
+                    AppLocalizations.of(context)!.signout,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20,

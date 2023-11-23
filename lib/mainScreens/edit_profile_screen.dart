@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:drivers_app/InfoHandler/app_info.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../global/global.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -77,7 +77,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                       // Name
                       Text(
-                        "Name",
+                        AppLocalizations.of(context)!.name,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
@@ -118,7 +118,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                       // Email
                       Text(
-                        "Email",
+                        AppLocalizations.of(context)!.email,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
@@ -158,7 +158,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       const SizedBox(height: 10,),
 
                       Text(
-                        "Phone Number",
+                        AppLocalizations.of(context)!.phoneNumber,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
@@ -199,7 +199,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                       // Password
                       Text(
-                        "Password",
+                        AppLocalizations.of(context)!.password,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,

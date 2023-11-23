@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:drivers_app/mainScreens/main_screen.dart';
 import 'package:pinput/pinput.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class OtpPage extends StatefulWidget {
   @override
   _OtpPageState createState() => _OtpPageState();
@@ -46,7 +46,7 @@ class _OtpPageState extends State<OtpPage> {
     } on FirebaseAuthException catch (e) {
       Get.snackbar(
         e.message.toString(),
-        "Failed",
+        AppLocalizations.of(context)!.error,
         colorText: Colors.white,
       );
     }
@@ -58,8 +58,8 @@ class _OtpPageState extends State<OtpPage> {
       verifyOtp(verificationId, otpCode!);
     } else {
       Get.snackbar(
-        "Enter 6-Digit code",
-        "Failed",
+        AppLocalizations.of(context)!.otp,
+        AppLocalizations.of(context)!.error,
         colorText: Colors.white,
       );
     }
@@ -106,8 +106,8 @@ class _OtpPageState extends State<OtpPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               const SizedBox(height: 200),
-              buildText('Enter 6 digit OTP'),
-              buildText('sent to your number'),
+                buildText(AppLocalizations.of(context)!.otp),
+              buildText(AppLocalizations.of(context)!.number),
               const SizedBox(height: 50),
               Pinput(
                 length: 6,
@@ -136,18 +136,18 @@ class _OtpPageState extends State<OtpPage> {
               ElevatedButton(
                   style: style,
                   onPressed: _login,
-                  child: const Text(
-                    'SIGN IN',
+                  child:  Text(
+                   AppLocalizations.of(context)!.loginas,
                     style: TextStyle(fontSize: 14, color: Colors.white),
                   )),
               const SizedBox(height: 80),
-              const Text(
-                "Didn't receive any code?",
+               Text(
+                AppLocalizations.of(context)!.errorcode,
                 style: TextStyle(fontSize: 12, color: Colors.grey),
               ),
               const SizedBox(height: 10),
-              const Text(
-                "Resend new code",
+               Text(
+               AppLocalizations.of(context)!.resendCode,
                 style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey,

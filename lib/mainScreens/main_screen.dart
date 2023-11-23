@@ -44,6 +44,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     return Scaffold(
           appBar: AppBar(
+             backgroundColor: Color.fromARGB(255, 0, 0, 0),
         title: Text(AppLocalizations.of(context)!.homePage),
         actions: <Widget>[
           Padding(

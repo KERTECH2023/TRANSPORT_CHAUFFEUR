@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:drivers_app/models/trip_history_model.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class HistoryDesignUI extends StatefulWidget {
   TripHistoryModel? tripHistoryModel;
 
@@ -76,8 +76,8 @@ class _HistoryDesignUIState extends State<HistoryDesignUI> {
                 // Trip Distance
                 Column(
                   children: [
-                    const Text(
-                      "Distance",
+                     Text(
+                      AppLocalizations.of(context)!.distance,
                       style: TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.bold,
@@ -130,8 +130,8 @@ class _HistoryDesignUIState extends State<HistoryDesignUI> {
                 // Trip Fare
                 Column(
                   children: [
-                    const Text(
-                      "Fare",
+                     Text(
+                      AppLocalizations.of(context)!.fare,
                       style: TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.bold,

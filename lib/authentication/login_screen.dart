@@ -1,4 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:drivers_app/localization/language.dart';
+import 'package:drivers_app/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -6,8 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../global/global.dart';
+import '../localization/language_constants.dart';
 import '../widgets/progress_dialog.dart';
 
 class Login extends StatefulWidget {
@@ -40,7 +44,7 @@ String usertoken="";
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context){
-          return ProgressDialog(message: "Logging in");
+          return ProgressDialog(message: AppLocalizations.of(context)!.loggingin);
         }
     );
 
@@ -55,7 +59,7 @@ String usertoken="";
       dialogType: DialogType.error,
       animType: AnimType.rightSlide,
       title: 'Error',
-      desc: "Invalid email or password. Please try again.",
+      desc: "${AppLocalizations.of(context)!.wrongCredentials}",
     ).show();
    
         })
@@ -74,12 +78,12 @@ String usertoken="";
           
      
      reference.child(firebaseUser.uid).update({"token":usertoken});
-          Fluttertoast.showToast(msg: "Login Successful");
+          Fluttertoast.showToast(msg:  AppLocalizations.of(context)!.loginSuccessful);
           Navigator.pushNamed(context, '/');
         }
 
         else {
-          Fluttertoast.showToast(msg: "No driver record exist with this credentials");
+          Fluttertoast.showToast(msg:  AppLocalizations.of(context)!.noUserRecordExists);
           firebaseAuth.signOut();
           Navigator.pushNamed(context, '/');
         }
@@ -89,7 +93,7 @@ String usertoken="";
 
     else{
       Navigator.pop(context);
-      Fluttertoast.showToast(msg: "Wrong Credentials! Try Again");
+      Fluttertoast.showToast(msg: AppLocalizations.of(context)!.wrongCredentials);
     }
 
 
@@ -156,6 +160,43 @@ void handlePhoneNumberLogin() {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Color.fromARGB(255, 0, 0, 0),
+                      title: Text(AppLocalizations.of(context)!.homePage),
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DropdownButton<Language>(
+              underline: const SizedBox(),
+              icon: const Icon(
+                Icons.language,
+                color: Colors.white,
+              ),
+              onChanged: (Language? language) async {
+                if (language != null) {
+                  Locale _locale = await setLocale(language.languageCode);
+                  MyApp.setLocale(context, _locale);
+                }
+              },
+              items: Language.languageList().map<DropdownMenuItem<Language>>(
+                (e) => DropdownMenuItem<Language>(
+                  value: e,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Text(
+                        e.flag,
+                        style: const TextStyle(fontSize: 30),
+                      ),
+                      Text(e.name)
+                    ],
+                  ),
+                ),
+              ).toList(),
+            ),
+          ),
+        ],
+      ),
       backgroundColor: Colors.white,
       body: Form(
         key: _formKey,
@@ -167,8 +208,8 @@ void handlePhoneNumberLogin() {
                 children: [
                   Image.asset("images/logofi.png"),
 
-                  const Text(
-                    "Login as a Driver",
+                   Text(
+                    AppLocalizations.of(context)!.loginas,
                     style: TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.bold,
@@ -186,8 +227,8 @@ void handlePhoneNumberLogin() {
                       color: Colors.black,
                     ),
                     decoration: InputDecoration(
-                      labelText: "Email",
-                      hintText: "Email",
+                      labelText: AppLocalizations.of(context)!.email,
+                      hintText: AppLocalizations.of(context)!.emailHint,
 
                       prefixIcon: Icon(Icons.email),
                       suffixIcon: emailTextEditingController.text.isEmpty ?
@@ -197,32 +238,32 @@ void handlePhoneNumberLogin() {
                             onPressed: () => emailTextEditingController.clear(),
                           ),
 
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
+                      // enabledBorder: const OutlineInputBorder(
+                      //   borderSide: BorderSide(color: Colors.black),
+                      // ),
 
-                      focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
+                      // focusedBorder: const UnderlineInputBorder(
+                      //   borderSide: BorderSide(color: Colors.black),
+                      // ),
 
-                      hintStyle: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 10
-                      ),
+                      // hintStyle: const TextStyle(
+                      //     color: Colors.grey,
+                      //     fontSize: 10
+                      // ),
 
-                      labelStyle: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 15
-                      ),
+                      // labelStyle: const TextStyle(
+                      //     color: Colors.black,
+                      //     fontSize: 15
+                      // ),
                     ),
 
                     validator: (value){
                       if(value!.isEmpty){
-                        return "The field is empty";
+                        return AppLocalizations.of(context)!.fieldIsEmpty;;
                       }
 
                       else if (!value.contains('@')) {
-                        return "Invalid Email Address";
+                        return AppLocalizations.of(context)!.invalidEmailAddress;
                       }
 
                       else
@@ -242,8 +283,8 @@ void handlePhoneNumberLogin() {
                       color: Colors.black,
                     ),
                     decoration: InputDecoration(
-                      labelText: "Password",
-                      hintText: "Password",
+                     labelText: AppLocalizations.of(context)!.password,
+                      hintText: AppLocalizations.of(context)!.password,
 
                       prefixIcon: Icon(Icons.password),
                       suffixIcon: IconButton(
@@ -268,28 +309,28 @@ void handlePhoneNumberLogin() {
 
                       ),
 
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
+                      // enabledBorder: const OutlineInputBorder(
+                      //   borderSide: BorderSide(color: Colors.black),
+                      // ),
 
-                      focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
+                      // focusedBorder: const UnderlineInputBorder(
+                      //   borderSide: BorderSide(color: Colors.black),
+                      // ),
 
-                      hintStyle: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 10
-                      ),
+                      // hintStyle: const TextStyle(
+                      //     color: Colors.grey,
+                      //     fontSize: 10
+                      // ),
 
-                      labelStyle: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 15
-                      ),
+                      // labelStyle: const TextStyle(
+                      //     color: Colors.black,
+                      //     fontSize: 15
+                      // ),
                     ),
 
                     validator: (value){
                       if (value!.isEmpty) {
-                        return "The field is empty";
+                        return  AppLocalizations.of(context)!.fieldIsEmpty;
                       }
 
                       else {
@@ -305,8 +346,8 @@ void handlePhoneNumberLogin() {
                           context: context,
                           dialogType: DialogType.error,
                           animType: AnimType.rightSlide,
-                          title: 'Error',
-                          desc: "Please fill out your email then click on Forget Password",
+                          title: AppLocalizations.of(context)!.eerror,
+                          desc: AppLocalizations.of(context)!.pleasefilloutyouremailthenlickForgetpass,
                           ).show();
                           return;
                           }
@@ -316,16 +357,16 @@ void handlePhoneNumberLogin() {
                           context: context,
                           dialogType: DialogType.success,
                           animType: AnimType.rightSlide,
-                          title: 'Succes',
-                          desc: "A mail has been sent to your email , Click on the link to change your Password",
+                           title: AppLocalizations.of(context)!.succes,
+                          desc: AppLocalizations.of(context)!.mailhasbeensenttoouremail,
                           ).show();
                           } catch (e){
                              AwesomeDialog(
                           context: context,
                           dialogType: DialogType.error,
                           animType: AnimType.rightSlide,
-                          title: 'Error',
-                          desc: "Please verify the email that you have entered",
+                             title: AppLocalizations.of(context)!.eerror,
+                          desc: AppLocalizations.of(context)!.pleaseverifytheemailthatyouhaveentered,
                           ).show();
 
 
@@ -335,8 +376,8 @@ void handlePhoneNumberLogin() {
                     child: Container(
                       margin: const EdgeInsets.only(top: 10, bottom:  20),
                       alignment:Alignment.topRight,
-                      child: const Text(
-                        "Forget password?",
+                      child:  Text(
+                        AppLocalizations.of(context)!.forgetpassword,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
@@ -358,8 +399,8 @@ void handlePhoneNumberLogin() {
                           loginUser();
                         }
                       },
-                      child: const Text(
-                        "Login",
+                      child:  Text(
+                        AppLocalizations.of(context)!.loginas,
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 16
@@ -367,8 +408,8 @@ void handlePhoneNumberLogin() {
                       )
                   ),
                   const SizedBox(height: 10), // Adding some space between "Login" button and "Or" text
-                  const Text(
-                    "OR",
+                   Text(
+                   AppLocalizations.of(context)!.or,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -414,14 +455,11 @@ void handlePhoneNumberLogin() {
                       onPressed: (){
                         Navigator.pushNamed(context, '/register_screen');
                       },
-                      child: const Text(
-                        "Don't have an account? Register Now",
+                      child:  Text(
+                       AppLocalizations.of(context)!.noAccountRegister,
                         style: TextStyle(color: Colors.black),
                       )
                   )
-
-
-
                 ],
               ),
             ),
