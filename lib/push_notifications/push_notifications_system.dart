@@ -86,11 +86,7 @@ retrieveRideRequestInformation(remoteMessage.data["rideRequestId"],context);
         //Fluttertoast.showToast(msg: "This is the ride request ID:" + remoteMessage.data["rideRequestId"]);
       }
     });
-  }
-
-
-
-  Future generateRegistrationToken() async{
+     Future generateRegistrationToken() async{
     String? registrationToken = await firebaseMessaging.getToken(); // Generate and get registration token
 
     FirebaseDatabase.instance.ref()  // Saving the registration token
@@ -102,6 +98,11 @@ retrieveRideRequestInformation(remoteMessage.data["rideRequestId"],context);
     firebaseMessaging.subscribeToTopic("allDrivers");
     firebaseMessaging.subscribeToTopic("allUsers");
   }
+  }
+
+
+
+ 
 
   retrieveRideRequestInformation(String rideRequestID,BuildContext context){
     print("gggggggggggg"+ rideRequestID.toString());

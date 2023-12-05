@@ -408,58 +408,58 @@ void handlePhoneNumberLogin() {
                       )
                   ),
                   const SizedBox(height: 10), // Adding some space between "Login" button and "Or" text
-                   Text(
-                   AppLocalizations.of(context)!.or,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        onPressed: handleGoogleSignIn,
-                        style: customButtonStyle(), // Custom style for Google Sign-In button
-                        child: Image.asset(
-                          "images/google.png",
-                          width: 50,
-                          height: 50,
-                        ),
-                      ),
-                      SizedBox(width: 20),
-                      ElevatedButton(
-                        onPressed: handleFacebookLogin,
-                        style: customButtonStyle(), // Custom style for Facebook Login button
-                        child: Image.asset(
-                          "images/facebook.png",
-                          width: 50,
-                          height: 50,
-                        ),
-                      ),
-                      SizedBox(width: 20),
-                      ElevatedButton(
-                        onPressed: handlePhoneNumberLogin,
-                        style: customButtonStyle(), // Custom style for Phone Number Login button
-                        child: Image.asset(
-                          "images/phone.png",
-                          width: 50,
-                          height: 50,
-                        ),
-                      ),
-                    ],
-                  ),
+                  //  Text(
+                  //  AppLocalizations.of(context)!.or,
+                  //   style: TextStyle(
+                  //     fontSize: 20,
+                  //     fontWeight: FontWeight.bold,
+                  //     color: Colors.black,
+                  //   ),
+                  // ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     ElevatedButton(
+                  //       onPressed: handleGoogleSignIn,
+                  //       style: customButtonStyle(), // Custom style for Google Sign-In button
+                  //       child: Image.asset(
+                  //         "images/google.png",
+                  //         width: 50,
+                  //         height: 50,
+                  //       ),
+                  //     ),
+                  //     SizedBox(width: 20),
+                  //     ElevatedButton(
+                  //       onPressed: handleFacebookLogin,
+                  //       style: customButtonStyle(), // Custom style for Facebook Login button
+                  //       child: Image.asset(
+                  //         "images/facebook.png",
+                  //         width: 50,
+                  //         height: 50,
+                  //       ),
+                  //     ),
+                  //     SizedBox(width: 20),
+                  //     ElevatedButton(
+                  //       onPressed: handlePhoneNumberLogin,
+                  //       style: customButtonStyle(), // Custom style for Phone Number Login button
+                  //       child: Image.asset(
+                  //         "images/phone.png",
+                  //         width: 50,
+                  //         height: 50,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
 
-                  TextButton(
-                      onPressed: (){
-                        Navigator.pushNamed(context, '/register_screen');
-                      },
-                      child:  Text(
-                       AppLocalizations.of(context)!.noAccountRegister,
-                        style: TextStyle(color: Colors.black),
-                      )
-                  )
+                  // TextButton(
+                  //     onPressed: (){
+                  //       Navigator.pushNamed(context, '/register_screen');
+                  //     },
+                  //     child:  Text(
+                  //      AppLocalizations.of(context)!.noAccountRegister,
+                  //       style: TextStyle(color: Colors.black),
+                  //     )
+                  // )
                 ],
               ),
             ),

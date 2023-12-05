@@ -7,7 +7,7 @@ class TripHistoryModel{
   String? fareAmount;
   String? status;
   String? carModel;
-   String? carNumber;
+  String? carNumber;
 
   TripHistoryModel({
     this.time,
@@ -25,6 +25,8 @@ class TripHistoryModel{
     destinationAddress = (snapshot.value as Map)["destinationAddress"].toString();
     fareAmount = (snapshot.value as Map)["fareAmount"].toString();
     status = (snapshot.value as Map)["status"].toString();
+    carModel = (snapshot.value as Map)["carModel"].toString();
+    carNumber = (snapshot.value as Map)["carNumber"].toString();
   }
 
 

@@ -1,9 +1,11 @@
 import 'package:drivers_app/localization/language.dart';
 import 'package:drivers_app/main.dart';
+import 'package:drivers_app/mainScreens/trip_history_screen.dart';
 import 'package:drivers_app/tabPages/earning_tab.dart';
 import 'package:drivers_app/tabPages/home_tab.dart';
 import 'package:drivers_app/tabPages/profile_tab.dart';
 import 'package:drivers_app/tabPages/ratings_tab.dart';
+import 'package:drivers_app/widgets/history_design_UI.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../assistants/assistant_methods.dart';
@@ -85,7 +87,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
         controller: tabController,
         children:  [
           HomeTabPage(),
-          EarningsTabPage(),
+          // HistoryDesignUI(),
           RatingsTabPage(),
           ProfileTabPage(),
         ],
@@ -98,10 +100,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
             label: "Home",
           ),
 
-          BottomNavigationBarItem(
-            icon: Icon(Icons.credit_card),
-            label: "Earnings",
-          ),
+  
 
           BottomNavigationBarItem(
             icon: Icon(Icons.star),

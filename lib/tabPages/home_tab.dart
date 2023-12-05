@@ -113,7 +113,7 @@ void requestNotificationPermission() async {
     currentFirebaseUser = firebaseAuth.currentUser;
     PushNotificationSystem pushNotificationSystem = PushNotificationSystem();
     pushNotificationSystem.initializeCloudMessaging(context);
-    pushNotificationSystem.generateRegistrationToken();
+    // pushNotificationSystem.generateRegistrationToken();
 
     // Get Driver Ratings
     AssistantMethods.getDriverRating(context);
