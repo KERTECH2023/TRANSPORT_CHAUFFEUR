@@ -40,6 +40,9 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
     super.initState();
     notificationServices.requestNotificationPermission();
     tabController = TabController(length: 4, vsync: this);
+     PushNotificationSystem pushNotificationSystem = PushNotificationSystem();
+    pushNotificationSystem.initializeCloudMessaging(context);
+     pushNotificationSystem.generateRegistrationToken();
   }
 
   @override
@@ -87,9 +90,9 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
         controller: tabController,
         children:  [
           HomeTabPage(),
-          // HistoryDesignUI(),
           RatingsTabPage(),
           ProfileTabPage(),
+          HistoryDesignUI(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

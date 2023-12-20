@@ -57,41 +57,43 @@ class _RatingsTabPageState extends State<RatingsTabPage> {
     }
   }
 
-void loadComments() {
-  print("this currentFirebaseUser!.uidffffffff"+currentFirebaseUser!.uid);
-  DatabaseReference commentsRef = FirebaseDatabase.instance
-      .ref()
-      .child("Drivers")
-      .child(currentFirebaseUser!.uid) // or use driverData.id! if it's the correct ID
-      .child("comments");
+  void loadComments() {
+    print("Current User ID: ${currentFirebaseUser!.uid}");
+    DatabaseReference commentsRef = FirebaseDatabase.instance
+        .ref()
+        .child("Drivers")
+        .child(currentFirebaseUser!.uid)
+        .child("comments");
 
- commentsRef.once().then((DatabaseEvent event) {
-  if (event.snapshot.value != null) {
-    Map<dynamic, dynamic>? values = 
-        (event.snapshot.value as Map<dynamic, dynamic>?);
+    commentsRef.once().then((DatabaseEvent event) {
+      if (event.snapshot.value != null) {
+        print("Comments Data: ${event.snapshot.value}");
 
-    if (values != null) {
-      values.forEach((key, value) {
-        if (value is String) {
-          comments.add({
-            'comment': value,
+        Map<dynamic, dynamic>? values =
+            (event.snapshot.value as Map<dynamic, dynamic>?);
+
+        if (values != null) {
+          values.forEach((key, value) {
+            if (value is Map) {
+              comments.add({
+                'user': value['user'],
+                'comment': value['comment'],
+              });
+            }
           });
+
+          setState(() {
+            // Trigger a rebuild to display comments in the interface
+            print("Comments List: $comments");
+          });
+        } else {
+          print("Invalid data structure in comments");
         }
-      });
-
-      setState(() {
-        // Trigger a rebuild to display comments in the interface
-      });
-    } else {
-      print("Invalid data structure in comments");
-    }
+      } else {
+        print("No comments data found");
+      }
+    });
   }
-});
-}
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -209,7 +211,7 @@ void loadComments() {
                         itemCount: comments.length,
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
-                           
+                            title: Text('Client: ${comments[index]['user']}'),
                             subtitle: Text('Comment: ${comments[index]['comment']}'),
                           );
                         },

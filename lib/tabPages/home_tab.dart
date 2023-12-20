@@ -32,7 +32,7 @@ class _HomeTabPageState extends State<HomeTabPage> {
   final Completer<GoogleMapController> _controllerGoogleMap = Completer();
 
   static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
+    target: LatLng(36.891696, 10.1815426),
     zoom: 14.4746,
   );
 
@@ -111,8 +111,8 @@ void requestNotificationPermission() async {
     AssistantMethods.getLastTripInformation(context);
 
     currentFirebaseUser = firebaseAuth.currentUser;
-    PushNotificationSystem pushNotificationSystem = PushNotificationSystem();
-    pushNotificationSystem.initializeCloudMessaging(context);
+    // PushNotificationSystem pushNotificationSystem = PushNotificationSystem();
+    // pushNotificationSystem.initializeCloudMessaging(context);
     // pushNotificationSystem.generateRegistrationToken();
 
     // Get Driver Ratings
@@ -126,9 +126,9 @@ void requestNotificationPermission() async {
     requestNotificationPermission();
     checkIfLocationPermissionAllowed();
     readCurrentDriverInformation();
-    PushNotificationSystem pushNotificationSystem = PushNotificationSystem();
-    pushNotificationSystem.initializeCloudMessaging(context);
-    // pushNotificationSystem.generateRegistrationToken();
+    // PushNotificationSystem pushNotificationSystem = PushNotificationSystem();
+    // pushNotificationSystem.initializeCloudMessaging(context);
+    //  pushNotificationSystem.generateRegistrationToken();
     AssistantMethods.readRideRequestKeys(context);
   }
 

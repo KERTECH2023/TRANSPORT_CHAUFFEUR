@@ -407,7 +407,7 @@ void handlePhoneNumberLogin() {
                         ),
                       )
                   ),
-                  const SizedBox(height: 10), // Adding some space between "Login" button and "Or" text
+                  // const SizedBox(height: 10), // Adding some space between "Login" button and "Or" text
                   //  Text(
                   //  AppLocalizations.of(context)!.or,
                   //   style: TextStyle(

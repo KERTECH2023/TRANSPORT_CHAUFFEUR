@@ -32,7 +32,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
   final Completer<GoogleMapController> _controllerGoogleMap = Completer();
 
   static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
+    target: LatLng(36.891696, 10.1815426),
     zoom: 14.4746,
   );
 
