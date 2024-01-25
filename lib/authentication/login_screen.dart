@@ -49,7 +49,7 @@ String usertoken="";
     );
 
     final User? firebaseUser = (
-        await firebaseAuth.signInWithEmailAndPassword(
+        await firebaseAuth?.signInWithEmailAndPassword(
           email: emailTextEditingController.text.trim(),
           password:passwordTextEditingController.text.trim()
         ).catchError((message){
@@ -63,7 +63,7 @@ String usertoken="";
     ).show();
    
         })
-    ).user;
+    )?.user;
 
     if(firebaseUser != null) {
       
@@ -84,7 +84,7 @@ String usertoken="";
 
         else {
           Fluttertoast.showToast(msg:  AppLocalizations.of(context)!.noUserRecordExists);
-          firebaseAuth.signOut();
+          firebaseAuth?.signOut();
           Navigator.pushNamed(context, '/');
         }
 
@@ -99,52 +99,52 @@ String usertoken="";
 
 
   }
-  Future<UserCredential> signInWithGoogle() async {
-  // Step 1: Initiate Google Sign-In
-  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+//   Future<UserCredential> signInWithGoogle() async {
+//   // Step 1: Initiate Google Sign-In
+//   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-  // Step 2: Obtain Google Sign-In Authentication
-  final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
+//   // Step 2: Obtain Google Sign-In Authentication
+//   final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
 
-  // Step 3: Create Firebase credentials
-  final OAuthCredential credential = GoogleAuthProvider.credential(
-    accessToken: googleAuth.accessToken,
-    idToken: googleAuth.idToken,
-  );
+//   // Step 3: Create Firebase credentials
+//   final OAuthCredential credential = GoogleAuthProvider.credential(
+//     accessToken: googleAuth.accessToken,
+//     idToken: googleAuth.idToken,
+//   );
 
-  // Step 4: Sign in with Firebase using the obtained credentials
-  return await FirebaseAuth.instance.signInWithCredential(credential);
-}
+//   // Step 4: Sign in with Firebase using the obtained credentials
+//   return await FirebaseAuth.instance.signInWithCredential(credential);
+// }
 
- Future<void> handleGoogleSignIn() async {
-    try {
-      UserCredential userCredential = await signInWithGoogle();
-      User? user = userCredential.user;
-      if (user != null) {
-        // Successfully signed in with Google.
-        // You can store the user information or perform any other actions here.
-        Navigator.pushNamed(context, '/main_screen'); // Replace '/next_interface' with the route of your next interface.
-      } else {
-        // Handle sign-in failure here, if needed.
-        Fluttertoast.showToast(msg: "Google Sign-In Failed. Please try again.");
-      }
-    } catch (e) {
-      // Handle sign-in failure and errors here, if needed.
-      print("Google Sign-In Error: $e");
-      Fluttertoast.showToast(msg: "Google Sign-In Error: $e");
-    }
-  }
+//  Future<void> handleGoogleSignIn() async {
+//     try {
+//       UserCredential userCredential = await signInWithGoogle();
+//       User? user = userCredential.user;
+//       if (user != null) {
+//         // Successfully signed in with Google.
+//         // You can store the user information or perform any other actions here.
+//         Navigator.pushNamed(context, '/main_screen'); // Replace '/next_interface' with the route of your next interface.
+//       } else {
+//         // Handle sign-in failure here, if needed.
+//         Fluttertoast.showToast(msg: "Google Sign-In Failed. Please try again.");
+//       }
+//     } catch (e) {
+//       // Handle sign-in failure and errors here, if needed.
+//       print("Google Sign-In Error: $e");
+//       Fluttertoast.showToast(msg: "Google Sign-In Error: $e");
+//     }
+//   }
     
 
   // Function for Facebook Login
-  void handleFacebookLogin() {
-    // Implement the Facebook Login logic here
-  }
+//   void handleFacebookLogin() {
+//     // Implement the Facebook Login logic here
+//   }
 
-  // Function for Phone Number Login
-void handlePhoneNumberLogin() {
-  Navigator.pushNamed(context, '/phone_signin'); // Replace '/phone_number_login_interface' with the route of your desired interface
-}
+//   // Function for Phone Number Login
+// void handlePhoneNumberLogin() {
+//   Navigator.pushNamed(context, '/phone_signin'); // Replace '/phone_number_login_interface' with the route of your desired interface
+// }
 
   ButtonStyle customButtonStyle() {
     return ElevatedButton.styleFrom(
@@ -451,15 +451,15 @@ void handlePhoneNumberLogin() {
                   //   ],
                   // ),
 
-                  // TextButton(
-                  //     onPressed: (){
-                  //       Navigator.pushNamed(context, '/register_screen');
-                  //     },
-                  //     child:  Text(
-                  //      AppLocalizations.of(context)!.noAccountRegister,
-                  //       style: TextStyle(color: Colors.black),
-                  //     )
-                  // )
+                  TextButton(
+                      onPressed: (){
+                        Navigator.pushNamed(context, '/register_screen');
+                      },
+                      child:  Text(
+                       AppLocalizations.of(context)!.noAccountRegister,
+                        style: TextStyle(color: Colors.black),
+                      )
+                  )
                 ],
               ),
             ),

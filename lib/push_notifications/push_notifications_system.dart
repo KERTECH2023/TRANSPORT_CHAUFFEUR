@@ -112,7 +112,7 @@ retrieveRideRequestInformation(remoteMessage.data["rideRequestId"],context);
         .child(rideRequestID)
         .child("driverId")
         .onValue.listen((snapData)
-    { if(snapData.snapshot.value == "waiting" || snapData.snapshot.value == firebaseAuth.currentUser!.uid){
+    { if(snapData.snapshot.value == "waiting" || snapData.snapshot.value == firebaseAuth!.currentUser!.uid){
 
       FirebaseDatabase.instance.ref().child("AllRideRequests").child(rideRequestID).once().then((snapData)
 

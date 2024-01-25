@@ -14,12 +14,12 @@ class _MySplashScreenState extends State<MySplashScreen> {
 
   startTimer(){
     //Fetching the User Data
-    firebaseAuth.currentUser != null ? AssistantMethods.readOnlineUserCurrentInfo() : null;
+    firebaseAuth!.currentUser != null ? AssistantMethods.readOnlineUserCurrentInfo() : null;
 
     Timer(const Duration(seconds: 5),() async {
-      if(await firebaseAuth.currentUser!=null){
+      if(await firebaseAuth!.currentUser!=null){
         // send User to main screen
-        currentFirebaseUser = firebaseAuth.currentUser;
+        currentFirebaseUser = firebaseAuth!.currentUser;
         Navigator.pushNamed(context, '/main_screen');
       }
       else{

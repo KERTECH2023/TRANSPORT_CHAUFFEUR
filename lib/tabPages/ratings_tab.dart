@@ -147,7 +147,7 @@ class _RatingsTabPageState extends State<RatingsTabPage> {
               ),
               const SizedBox(height: 20.0,),
               Text(
-                driverData.name!,
+                driverData?.name ?? "",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 20,

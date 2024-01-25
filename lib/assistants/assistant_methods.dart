@@ -45,7 +45,7 @@ class AssistantMethods {
   }
 
   static void readOnlineUserCurrentInfo() {
-    currentFirebaseUser = firebaseAuth.currentUser;
+    currentFirebaseUser = firebaseAuth?.currentUser;
     DatabaseReference reference = FirebaseDatabase.instance.ref()
         .child("Users").child(currentFirebaseUser!.uid);
 
@@ -188,7 +188,7 @@ class AssistantMethods {
   static void getLastTripInformation(context) {
     FirebaseDatabase.instance.ref()
         .child("AllRideRequests")
-        .child(driverData.lastTripId!)
+        .child(driverData?.lastTripId ?? "" )
         .once()
         .then((snapData) async {
           var lastTripHistoryInformation = TripHistoryModel.fromSnapshot(snapData.snapshot);

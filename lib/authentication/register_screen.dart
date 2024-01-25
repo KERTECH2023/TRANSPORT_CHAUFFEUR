@@ -67,7 +67,7 @@ class _RegisterState extends State<Register> {
           return ProgressDialog(message: AppLocalizations.of(context)!.processingPleasewait);
         });
 
-    final User? firebaseUser = (await firebaseAuth
+    final User? firebaseUser = (await firebaseAuth!
             .createUserWithEmailAndPassword(
                 email: emailTextEditingController.text.trim(),
                 password: passwordTextEditingController.text.trim())

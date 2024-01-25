@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:ffi';
 import 'package:drivers_app/assistants/assistant_methods.dart';
 import 'package:drivers_app/global/global.dart';
@@ -67,7 +68,7 @@ void requestNotificationPermission() async {
     CameraPosition cameraPosition = CameraPosition(target:latLngPosition, zoom: 16);
     newMapController!.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
 
-    userName = currentUserInfo!.name!;
+    userName = currentUserInfo?.name ??"";
     
     String humanReadableAddress = await AssistantMethods.searchAddressForGeographicCoordinates(driverCurrentPosition!,context);
     print("this is your address = " + humanReadableAddress);
@@ -75,7 +76,7 @@ void requestNotificationPermission() async {
 
   // Enable Push Notifications
   readCurrentDriverInformation() async {
-    currentFirebaseUser = firebaseAuth.currentUser;
+    currentFirebaseUser = firebaseAuth!.currentUser;
 
     await FirebaseDatabase.instance.ref()
         .child("Drivers")
@@ -84,33 +85,31 @@ void requestNotificationPermission() async {
         .then((snapData) {
          DataSnapshot snapshot = snapData.snapshot;
          if(snapshot.exists){
-           driverData.id = (snapshot.value as Map)["id"];
-           driverData.name = (snapshot.value as Map)["name"];
-           driverData.email = (snapshot.value as Map)["email"];
-           driverData.phone = (snapshot.value as Map)["phone"];
-           driverData.carColor = (snapshot.value as Map)["carDetails"]["carColor"];
-           driverData.carModel = (snapshot.value as Map)["carDetails"]["carModel"];
-           driverData.carNumber = (snapshot.value as Map)["carDetails"]["carNumber"];
-           driverData.carType = (snapshot.value as Map)["carDetails"]["carType"];
-           driverData.lastTripId = (snapshot.value as Map)["lastTripId"];
-           driverData.totalEarnings = (snapshot.value as Map)["totalEarnings"];
-           driverData.cstatus = (snapshot.value as Map)["Cstatus"];
-           driverData.dateNaissance = (snapshot.value as Map)["DateNaissance"];
-           driverData.address = (snapshot.value as Map)["address"];
-           driverData.cnicNo = (snapshot.value as Map)["cnicNo"];
-           driverData.gender = (snapshot.value as Map)["gender"];
-           driverData.licence = (snapshot.value as Map)["licence"];
-           driverData.postalCode = (snapshot.value as Map)["postalCode"];
-           driverData.photoUrl = (snapshot.value as Map)["imageUrl"];
-           
-
+           driverData?.id = (snapshot.value as Map)["id"];
+           driverData?.name = (snapshot.value as Map)["name"];
+           driverData?.email = (snapshot.value as Map)["email"];
+           driverData?.phone = (snapshot.value as Map)["phone"];
+           driverData?.carColor = (snapshot.value as Map)["carDetails"]["carColor"];
+           driverData?.carModel = (snapshot.value as Map)["carDetails"]["carModel"];
+           driverData?.carNumber = (snapshot.value as Map)["carDetails"]["carNumber"];
+           driverData?.carType = (snapshot.value as Map)["carDetails"]["carType"];
+           driverData?.lastTripId = (snapshot.value as Map)["lastTripId"];
+           driverData?.totalEarnings = (snapshot.value as Map)["totalEarnings"];
+           driverData?.cstatus = (snapshot.value as Map)["Cstatus"];
+           driverData?.dateNaissance = (snapshot.value as Map)["DateNaissance"];
+           driverData?.address = (snapshot.value as Map)["address"];
+           driverData?.cnicNo = (snapshot.value as Map)["cnicNo"];
+           driverData?.gender = (snapshot.value as Map)["gender"];
+           driverData?.licence = (snapshot.value as Map)["licence"];
+           driverData?.postalCode = (snapshot.value as Map)["postalCode"];
+           driverData?.photoUrl = (snapshot.value as Map)["imageUrl"];
          }
 
     });
 
     AssistantMethods.getLastTripInformation(context);
 
-    currentFirebaseUser = firebaseAuth.currentUser;
+    currentFirebaseUser = firebaseAuth?.currentUser;
     // PushNotificationSystem pushNotificationSystem = PushNotificationSystem();
     // pushNotificationSystem.initializeCloudMessaging(context);
     // pushNotificationSystem.generateRegistrationToken();
@@ -203,10 +202,15 @@ void requestNotificationPermission() async {
 
                     setState(() {
                       statusText = "Online";
+                       FirebaseDatabase.instance.ref()
+                              .child("Drivers")
+                              .child(currentFirebaseUser!.uid)
+                              .child("status")
+                              .set(statusText);
                       isDriverActive = true;
                       buttonColor = Colors.black;
                     });
-
+                    log("haw online wala la" + (driverData?.name).toString());
                     Fluttertoast.showToast(msg: "You are online now");
                   }
 
@@ -233,7 +237,7 @@ void requestNotificationPermission() async {
 
                 child: statusText != "Online"
                     ? Text(
-                        statusText,
+                        statusText ??"",
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,

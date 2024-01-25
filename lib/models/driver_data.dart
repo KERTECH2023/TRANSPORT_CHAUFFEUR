@@ -11,7 +11,7 @@ class DriverData{
    String? carType;
    String? lastTripId;
    String? totalEarnings;
-   String? cstatus;
+   bool? cstatus;
    String? dateNaissance;
    String? address;
    String? cnicNo;

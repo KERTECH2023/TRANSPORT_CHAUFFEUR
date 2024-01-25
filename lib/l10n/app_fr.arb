@@ -12,6 +12,7 @@
     "password": "Mot de passe",
     "name": "Nom",
     "rating":"Avis:",
+    "modify":"Modifier",
     "usercancel":"L'utilisateur a annulé le voyage",
     "newRideequest":"Demande de nouveau trajet",
     "accept":"Accepter",

@@ -60,7 +60,7 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
                     children: [
                       Text(
                         
-                        driverData.name!,
+                        driverData?.name ?? "",
                       
                         style: const TextStyle(
                           fontSize: 16,
@@ -102,7 +102,7 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
           GestureDetector(
             onTap: (){
               //Signout
-              firebaseAuth.signOut();
+              firebaseAuth?.signOut();
               Navigator.pushNamed(context, '/');
             },
 
@@ -148,7 +148,7 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
       return widget.photoUrl!;
     } else {
       // If not, retrieve the photo URL from Firebase Storage based on user ID
-      String userId = firebaseAuth.currentUser?.uid ?? "";
+      String userId = firebaseAuth?.currentUser?.uid ?? "";
       String path = 'chauffeur_images/${userId}.jpg'; // Adjust the path based on your storage structure
       Reference ref = FirebaseStorage.instance.ref(path);
       return await ref.getDownloadURL();

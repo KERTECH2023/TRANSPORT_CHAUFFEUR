@@ -185,7 +185,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
     Fluttertoast.showToast(msg: "KM:" + tripDirectionDetailsInfo!.duration_text! + " Time:" + tripDirectionDetailsInfo.distance_text!);
 
     // Fare Amount
-    double? fareAmount = AssistantMethods.calculateFareAmountFromSourceToDestination(tripDirectionDetailsInfo, driverData.carType);
+    double? fareAmount = AssistantMethods.calculateFareAmountFromSourceToDestination(tripDirectionDetailsInfo, driverData?.carType);
 
     FirebaseDatabase.instance.ref()
         .child("AllRideRequests")
@@ -544,10 +544,10 @@ class _NewTripScreenState extends State<NewTripScreen> {
                                                                  .child(widget.rideRequestInformation!.rideRequestId!);
 
     Map driverCarDetailsMap = {
-      "carColor" : driverData.carColor,
-      "carModel" : driverData.carModel,
-      "carNumber" : driverData.carNumber,
-      "carType" : driverData.carType
+      "carColor" : driverData?.carColor,
+      "carModel" : driverData?.carModel,
+      "carNumber" : driverData?.carNumber,
+      "carType" : driverData?.carType
     };
 
     Map driverLocationDataMap = {
@@ -556,9 +556,9 @@ class _NewTripScreenState extends State<NewTripScreen> {
     };
 
     reference.child("status").set("Accepted");
-    reference.child("driverId").set(driverData.id);
-    reference.child("driverName").set(driverData.name);
-    reference.child("driverPhone").set(driverData.phone);
+    reference.child("driverId").set(driverData?.id);
+    reference.child("driverName").set(driverData?.name);
+    reference.child("driverPhone").set(driverData?.phone);
     reference.child("carDetails").set(driverCarDetailsMap);
     reference.child("driverLocationData").set(driverLocationDataMap);
 

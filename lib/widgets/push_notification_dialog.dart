@@ -259,7 +259,7 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
     String rideRequestId = "";
     FirebaseDatabase.instance.ref()
         .child("Drivers")
-        .child(firebaseAuth.currentUser!.uid)
+        .child(firebaseAuth?.currentUser?.uid ?? "")
         .child("newRideStatus")
         .once()
         .then((snapData)  {
