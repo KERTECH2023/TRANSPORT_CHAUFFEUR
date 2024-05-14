@@ -33,14 +33,16 @@ def keystoreProperties = new Properties()
    }
 
 android {
-    compileSdkVersion 33
-    ndkVersion flutter.ndkVersion
-
+    compileSdkVersion 34
+    ndkVersion  "25.1.8937393"
     compileOptions {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
 
+    lintOptions {
+        disable 'UncheckedAssignment'
+    }
     kotlinOptions {
         jvmTarget = '1.8'
     }
@@ -54,7 +56,7 @@ android {
         applicationId "transport.app.drivers_app"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        minSdkVersion 20
+        minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

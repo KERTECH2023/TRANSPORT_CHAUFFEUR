@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class FareAmountDialog extends StatefulWidget {
 
-  double? fareAmount;
+  String? fareAmount;
   String? userName;
 
   FareAmountDialog({this.fareAmount,this.userName});
@@ -75,7 +75,6 @@ class _FareAmountDialogState extends State<FareAmountDialog> {
               ),
 
               const SizedBox(height: 10),
-
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: ElevatedButton(
@@ -84,16 +83,17 @@ class _FareAmountDialogState extends State<FareAmountDialog> {
                   },
 
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.redAccent
+                      backgroundColor: Colors.redAccent
                   ),
 
                   child:  Text(
-                    AppLocalizations.of(context)!.signout,
+                   // AppLocalizations.of(context)!.signout,
+                    "cash paid",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white
                     ),
                   ),
                 ),

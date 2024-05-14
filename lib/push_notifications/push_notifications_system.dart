@@ -112,8 +112,8 @@ retrieveRideRequestInformation(remoteMessage.data["rideRequestId"],context);
         .child(rideRequestID)
         .child("driverId")
         .onValue.listen((snapData)
-    { if(snapData.snapshot.value == "waiting" || snapData.snapshot.value == firebaseAuth!.currentUser!.uid){
-
+    { if(snapData.snapshot.value == "waiting" || snapData.snapshot.value == firebaseAuth.currentUser!.uid){
+      print("valeur: ${snapData.snapshot.value}");
       FirebaseDatabase.instance.ref().child("AllRideRequests").child(rideRequestID).once().then((snapData)
 
      {  if(snapData.snapshot.value != null){
@@ -164,10 +164,7 @@ retrieveRideRequestInformation(remoteMessage.data["rideRequestId"],context);
           }
      }});
     }
-    else {
-      Fluttertoast.showToast(msg: "this Ride request  has been cancelled");
-      Navigator.popAndPushNamed(context, "/main_screen");
-    }
+
     });
 
   }

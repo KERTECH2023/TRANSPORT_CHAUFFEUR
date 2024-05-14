@@ -15,7 +15,11 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 12.12.12+24
+version: 11.11.13+40
+
+
+
+
 
 environment:
   sdk: ">=2.17.6 <3.0.0"
@@ -43,10 +47,10 @@ dependencies:
   http: ^0.13.5
   pinput: ^2.2.16
   google_sign_in: ^6.1.4
-  googleapis_auth: ^1.4.1 
+  googleapis_auth: ^1.4.1
   provider: ^6.0.3
   permission_handler: ^11.0.0
-  intl: ^0.17.0
+  intl: ^0.18.1
   get: ^4.6.5
   country_picker: ^2.0.20
   image_picker: ^1.0.2
@@ -73,24 +77,24 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_launcher_icons: ^0.13.1
 flutter_launcher_icons:
-   android: true
-   ios: true
-   image_path: "images/logo(512).png"
-   min_sdk_android: 21
+  android: true
+  ios: true
+  image_path: "images/logo(512).png"
+  min_sdk_android: 21
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
 flutter:
-  generate: true  
+  generate: true
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -98,9 +102,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     - images/
-     - images/Passport_Photo.png
-     - music/music_notification.mp3
+    - images/
+    - images/Passport_Photo.png
+    - music/music_notification.mp3
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

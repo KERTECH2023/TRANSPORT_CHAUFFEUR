@@ -67,7 +67,7 @@ class _RegisterState extends State<Register> {
           return ProgressDialog(message: AppLocalizations.of(context)!.processingPleasewait);
         });
 
-    final User? firebaseUser = (await firebaseAuth!
+    final User? firebaseUser = (await firebaseAuth
             .createUserWithEmailAndPassword(
                 email: emailTextEditingController.text.trim(),
                 password: passwordTextEditingController.text.trim())
@@ -628,7 +628,7 @@ class _RegisterState extends State<Register> {
                   const SizedBox(height: 20),
 
                   ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary: Colors.black),
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           saveUserInfo();

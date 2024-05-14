@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:drivers_app/authentication/delete_account.dart';
 import 'package:drivers_app/mainScreens/edit_profile_screen.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -7,6 +10,7 @@ import 'package:drivers_app/global/global.dart';
 import 'package:drivers_app/mainScreens/profile_screen.dart';
 import 'package:drivers_app/mainScreens/trip_history_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_geofire/flutter_geofire.dart';
 class DashboardDrawer extends StatefulWidget {
  final String? name;
  String? photoUrl; 
@@ -30,27 +34,19 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
             child: DrawerHeader(
               decoration: const BoxDecoration(color: Colors.black),
               child: Row(
-                children: [
-                   FutureBuilder(
-                    future: getImageUrl(), // Function to get the image URL
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        return CircleAvatar(
-                          radius: 40,
-                           backgroundImage: snapshot.data != null ? NetworkImage(snapshot.data.toString()) : null,
-        child: snapshot.data == null
-            ? const Icon(
-                Icons.person,
-                size: 40,
-                color: Colors.white,
-              )
-            : null,
-      );
-    } else {
-      // Show a loading indicator while waiting for the image URL
-      return CircularProgressIndicator();
-    }
-                    },
+                children: <Widget>[
+                  CircleAvatar(
+                    radius: 60,
+                    backgroundImage: driverData.photoUrl != null
+                        ? MemoryImage(ImageMemoryWidget())
+                        : null,
+                    child: driverData.photoUrl == null
+                        ? Icon(
+                      Icons.person,
+                      size: 60,
+                      color: Colors.white,
+                    )
+                        : null,
                   ),
 
                   const SizedBox(width: 16),
@@ -59,9 +55,9 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        
-                        driverData?.name ?? "",
-                      
+
+                        driverData.name!,
+
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -102,7 +98,9 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
           GestureDetector(
             onTap: (){
               //Signout
-              firebaseAuth?.signOut();
+              firebaseAuth.signOut();
+              Geofire.removeLocation(currentFirebaseUser!.uid); // ActiveDrivers child with this id deleted from Realtime Firebase
+
               Navigator.pushNamed(context, '/');
             },
 
@@ -142,16 +140,10 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
       ),
     );
   }
-  Future<String> getImageUrl() async {
-    if (widget.photoUrl != null) {
-      // If the photoUrl is already provided, use it directly
-      return widget.photoUrl!;
-    } else {
-      // If not, retrieve the photo URL from Firebase Storage based on user ID
-      String userId = firebaseAuth?.currentUser?.uid ?? "";
-      String path = 'chauffeur_images/${userId}.jpg'; // Adjust the path based on your storage structure
-      Reference ref = FirebaseStorage.instance.ref(path);
-      return await ref.getDownloadURL();
-    }
+
+  Uint8List ImageMemoryWidget()  {
+    String imageData = driverData.photoUrl!.split(',')[1];
+    Uint8List bytes = base64.decode(imageData);
+    return bytes;
   }
-}
+  }

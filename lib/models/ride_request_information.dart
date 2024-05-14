@@ -9,7 +9,9 @@ class RideRequestInformation{
   LatLng? destinationLatLng;
   String? sourceAddress;
   String? destinationAddress;
-  String? healthStatus;
+ String? healthStatus;
+  String? carModel;
+  String? carNumber;
 
   RideRequestInformation({
     this.rideRequestId,
@@ -20,7 +22,7 @@ class RideRequestInformation{
     this.sourceAddress,
     this.destinationAddress,
     this.healthStatus,
-
+this.carModel,this.carNumber
 
   });
 

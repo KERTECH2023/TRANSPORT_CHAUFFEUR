@@ -45,7 +45,7 @@ class AssistantMethods {
   }
 
   static void readOnlineUserCurrentInfo() {
-    currentFirebaseUser = firebaseAuth?.currentUser;
+    currentFirebaseUser = firebaseAuth.currentUser;
     DatabaseReference reference = FirebaseDatabase.instance.ref()
         .child("Users").child(currentFirebaseUser!.uid);
 
@@ -100,7 +100,7 @@ class AssistantMethods {
         driverCurrentPosition!.longitude);
   }
 
-  static double calculateFareAmountFromSourceToDestination(
+  /*static double calculateFareAmountFromSourceToDestination(
       DirectionDetailsInfo directionDetailsInfo, String? vehicleType) {
     double baseFare, FareAmountPerMinute, FareAmountPerKilometer;
     if (vehicleType == "UberX") {
@@ -130,7 +130,36 @@ class AssistantMethods {
 
     return double.parse(totalFareAmount.toStringAsFixed(1));
   }
+*/
+  static void getLastTripInformation(context) {
+    FirebaseDatabase.instance.ref()
+        .child("AllRideRequests")
+        .once()
+        .then((snapData) async {
+      var lastTripHistoryInformation = TripHistoryModel.fromSnapshot(snapData.snapshot);
+      if ((snapData.snapshot.value as Map)["status"] == "Ended") {
+        // Add each TripHistoryModel to a  historyInformationList in AppInfo class
 
+        LatLng lastTripSourceLatLng = LatLng((snapData.snapshot.value as Map)["source"]["latitude"], (snapData.snapshot.value as Map)["source"]["longitude"]);
+        LatLng lastTripDestinationLatLng = LatLng((snapData.snapshot.value as Map)["destination"]["latitude"], (snapData.snapshot.value as Map)["destination"]["longitude"]);
+        var lastTripDirectionDetailsInfo =  await getOriginToDestinationDirectionDetails(lastTripSourceLatLng,lastTripDestinationLatLng);
+        Provider.of<AppInfo>(context, listen: false).updateLastHistoryInformation(lastTripHistoryInformation,lastTripDirectionDetailsInfo!);
+
+      }
+    });
+  }
+
+  static Future<double> getFareAmount(String? rideRequestId) async {
+if (rideRequestId!=null) {
+  DataSnapshot snapshot = await FirebaseDatabase.instance.ref().child(
+      'AllRideRequests').child(rideRequestId).get();
+  return double.parse(snapshot
+      .child("fareAmount")
+      .value
+      .toString());
+}
+else return 0.0;
+  }
   // For Trip history
   static void readRideRequestKeys(context) {
     FirebaseDatabase.instance.ref()
@@ -185,10 +214,10 @@ class AssistantMethods {
     }
   }
 
-  static void getLastTripInformation(context) {
+  /*static void getLastTripInformation(context) {
     FirebaseDatabase.instance.ref()
         .child("AllRideRequests")
-        .child(driverData?.lastTripId ?? "" )
+        .child(driverData.lastTripId!)
         .once()
         .then((snapData) async {
           var lastTripHistoryInformation = TripHistoryModel.fromSnapshot(snapData.snapshot);
@@ -202,7 +231,7 @@ class AssistantMethods {
 
           }
     });
-  }
+  }*/
 
   static void getDriverRating(context){
     FirebaseDatabase.instance.ref()
@@ -214,8 +243,25 @@ class AssistantMethods {
       DataSnapshot snapshot = snapData.snapshot;
       if (snapshot.exists) {
         String driverRating = snapshot.value.toString();
-        Provider.of<AppInfo>(context).updateDriverRating(driverRating);
-      }
+        Provider.of<AppInfo>(context, listen: false).updateDriverRating(driverRating);
+      }/*static void getLastTripInformation(context) {
+    FirebaseDatabase.instance.ref()
+        .child("AllRideRequests")
+        .child(driverData.lastTripId!)
+        .once()
+        .then((snapData) async {
+          var lastTripHistoryInformation = TripHistoryModel.fromSnapshot(snapData.snapshot);
+          if ((snapData.snapshot.value as Map)["status"] == "Ended") {
+            // Add each TripHistoryModel to a  historyInformationList in AppInfo class
+
+            LatLng lastTripSourceLatLng = LatLng((snapData.snapshot.value as Map)["source"]["latitude"], (snapData.snapshot.value as Map)["source"]["longitude"]);
+            LatLng lastTripDestinationLatLng = LatLng((snapData.snapshot.value as Map)["destination"]["latitude"], (snapData.snapshot.value as Map)["destination"]["longitude"]);
+            var lastTripDirectionDetailsInfo =  await getOriginToDestinationDirectionDetails(lastTripSourceLatLng,lastTripDestinationLatLng);
+            Provider.of<AppInfo>(context, listen: false).updateLastHistoryInformation(lastTripHistoryInformation,lastTripDirectionDetailsInfo!);
+
+          }
+    });
+  }*/
     });
 
   }

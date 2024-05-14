@@ -21,7 +21,7 @@ class NewTripScreen extends StatefulWidget {
 
   RideRequestInformation? rideRequestInformation;
 
-  NewTripScreen({this.rideRequestInformation});
+  NewTripScreen({super.key, this.rideRequestInformation});
 
   @override
   State<NewTripScreen> createState() => _NewTripScreenState();
@@ -36,9 +36,9 @@ class _NewTripScreenState extends State<NewTripScreen> {
     zoom: 14.4746,
   );
 
-  Set<Marker> setOfMarkers = Set<Marker>();
-  Set<Circle> setOfCircles = Set<Circle>();
-  Set<Polyline> polyLineSet = Set<Polyline>();
+  Set<Marker> setOfMarkers = <Marker>{};
+  Set<Circle> setOfCircles = <Circle>{};
+  Set<Polyline> polyLineSet = <Polyline>{};
   List<LatLng> polyLineCoordinatesList = [];
   PolylinePoints polylinePoints = PolylinePoints();
 
@@ -49,7 +49,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
   Position? driverLiveLocation;
 
   String rideRequestStatus = "Accepted";
-  String buttonTitle = "Arrived";
+  String buttonTitle = "Arrivé";
   Color buttonColor = Colors.green;
   String durationFromSourceToDestination = "";
 
@@ -77,9 +77,9 @@ class _NewTripScreenState extends State<NewTripScreen> {
     polyLineCoordinatesList.clear();
 
     if(decodedPolyLinePointsList.isNotEmpty){
-      decodedPolyLinePointsList.forEach((PointLatLng pointLatLng) {
+      for (var pointLatLng in decodedPolyLinePointsList) {
         polyLineCoordinatesList.add(LatLng(pointLatLng.latitude, pointLatLng.longitude));
-      });
+      }
     }
 
     polyLineSet.clear();
@@ -185,7 +185,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
     Fluttertoast.showToast(msg: "KM:" + tripDirectionDetailsInfo!.duration_text! + " Time:" + tripDirectionDetailsInfo.distance_text!);
 
     // Fare Amount
-    double? fareAmount = AssistantMethods.calculateFareAmountFromSourceToDestination(tripDirectionDetailsInfo, driverData?.carType);
+    double? fareAmount = await AssistantMethods.getFareAmount(widget.rideRequestInformation!.rideRequestId);
 
     FirebaseDatabase.instance.ref()
         .child("AllRideRequests")
@@ -193,12 +193,12 @@ class _NewTripScreenState extends State<NewTripScreen> {
         .child("status")
         .set("Ended");
 
-    FirebaseDatabase.instance.ref()
+  /*  FirebaseDatabase.instance.ref()
         .child("AllRideRequests")
         .child(widget.rideRequestInformation!.rideRequestId!)
         .child("fareAmount")
         .set(fareAmount);
-
+*/
     streamSubscriptionPosition!.cancel();
 
     Navigator.pop(context);
@@ -209,7 +209,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
 
       builder: (BuildContext context){
         return FareAmountDialog(
-          fareAmount: fareAmount,
+          fareAmount: fareAmount.toStringAsFixed(1),
           userName: widget.rideRequestInformation!.userName
         );
       }
@@ -249,7 +249,9 @@ class _NewTripScreenState extends State<NewTripScreen> {
   @override
   void initState() {
     super.initState();
-    saveAssignedDriverDetailsToRideRequest();
+
+
+      saveAssignedDriverDetailsToRideRequest();
   }
 
   @override
@@ -445,7 +447,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
                           rideRequestStatus = "Arrived";
 
                           setState(() {
-                            buttonTitle = "Start Trip";
+                            buttonTitle = " démarrer le trajet";
                             buttonColor = Colors.green;
                           });
 
@@ -475,7 +477,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
                           rideRequestStatus = "On Trip";
 
                           setState(() {
-                            buttonTitle = "End Trip";
+                            buttonTitle = "Trajet Fini";
                             buttonColor = Colors.redAccent;
                           });
 
@@ -508,7 +510,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
                       },
 
                       style: ElevatedButton.styleFrom(
-                        primary: buttonColor,
+                        backgroundColor: buttonColor,
                       ),
 
                       icon: const Icon(
@@ -544,10 +546,10 @@ class _NewTripScreenState extends State<NewTripScreen> {
                                                                  .child(widget.rideRequestInformation!.rideRequestId!);
 
     Map driverCarDetailsMap = {
-      "carColor" : driverData?.carColor,
-      "carModel" : driverData?.carModel,
-      "carNumber" : driverData?.carNumber,
-      "carType" : driverData?.carType
+      //"carColor" : driverData.carColor,
+      "carModel" : driverData.carModel,
+      "carNumber" : driverData.carNumber,
+     // "carType" : driverData.carType
     };
 
     Map driverLocationDataMap = {
@@ -556,9 +558,9 @@ class _NewTripScreenState extends State<NewTripScreen> {
     };
 
     reference.child("status").set("Accepted");
-    reference.child("driverId").set(driverData?.id);
-    reference.child("driverName").set(driverData?.name);
-    reference.child("driverPhone").set(driverData?.phone);
+    reference.child("driverId").set(driverData.id);
+    reference.child("driverName").set(driverData.name);
+    reference.child("driverPhone").set(driverData.phone);
     reference.child("carDetails").set(driverCarDetailsMap);
     reference.child("driverLocationData").set(driverLocationDataMap);
 

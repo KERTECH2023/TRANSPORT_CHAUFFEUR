@@ -19,7 +19,7 @@ class _UserCancelMessageDialogState extends State<UserCancelMessageDialog> {
       ),
       backgroundColor: Colors.black,
       child: Container(
-        margin: EdgeInsets.all(6),
+        margin: const EdgeInsets.all(6),
         width: double.infinity,
         decoration: BoxDecoration(
             color: Colors.white,
@@ -33,7 +33,7 @@ class _UserCancelMessageDialogState extends State<UserCancelMessageDialog> {
             children: [
                Text(
                  AppLocalizations.of(context)!.tripMessage,
-                style: TextStyle(
+                style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                     color: Colors.black
@@ -45,7 +45,7 @@ class _UserCancelMessageDialogState extends State<UserCancelMessageDialog> {
                Text(
                 AppLocalizations.of(context)!.usercancel,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.black
@@ -57,7 +57,7 @@ class _UserCancelMessageDialogState extends State<UserCancelMessageDialog> {
                Text(
                 AppLocalizations.of(context)!.rideStatusCancelled,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 30,
                     color: Colors.black
                 ),
@@ -80,13 +80,13 @@ class _UserCancelMessageDialogState extends State<UserCancelMessageDialog> {
                   },
 
                   style: ElevatedButton.styleFrom(
-                      primary: const Color.fromRGBO(0 , 177 , 118, 1)
+                      backgroundColor: const Color.fromRGBO(0 , 177 , 118, 1)
                   ),
 
                   child:  Text(
                     AppLocalizations.of(context)!.submit,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.white

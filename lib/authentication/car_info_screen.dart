@@ -223,7 +223,7 @@ class _CarInfoScreenState extends State<CarInfoScreen>
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.black,
+                  backgroundColor: Colors.black,
                 ),
                 child: const Text(
                   "Next",

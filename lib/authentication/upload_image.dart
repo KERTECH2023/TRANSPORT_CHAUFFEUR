@@ -69,7 +69,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
         ElevatedButton(
           onPressed: () => pickAndUploadImage(imageName),
           style: ElevatedButton.styleFrom(
-            primary: Colors.black, // Set the button color to black
+            backgroundColor: Colors.black, // Set the button color to black
           ),
           child: Text(
             buttonText,
@@ -181,7 +181,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.black,
+                  backgroundColor: Colors.black,
                 ),
                 child: Text(
                   AppLocalizations.of(context)!.submit,

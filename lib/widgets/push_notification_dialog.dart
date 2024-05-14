@@ -16,7 +16,7 @@ class NotificationDialogBox extends StatefulWidget {
 
   RideRequestInformation? rideRequestInformation;
 
-  NotificationDialogBox({this.rideRequestInformation});
+  NotificationDialogBox({super.key, this.rideRequestInformation});
 
   @override
   State<NotificationDialogBox> createState() => _NotificationDialogBoxState();
@@ -26,8 +26,9 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
     FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
   @override
   Widget build(BuildContext context) {
-    // print("ride request infos "+ widget.rideRequestInformation.toString());
-    // print("sourrceeeeee" +  widget.rideRequestInformation!.sourceAddress!);
+    print("heremk");
+
+    print("sourrceeeeee" +  widget.rideRequestInformation!.sourceAddress!);
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(24),
@@ -51,11 +52,10 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
             Image.asset('images/car_logo.png',width: 160),
 
             const SizedBox(height: 10),
-
             // New Ride Request Text
              Text(
                AppLocalizations.of(context)!.newRideequest,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
                 color: Colors.white
@@ -136,7 +136,7 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
 
                       const SizedBox(width: 20),
 
-                      Expanded(
+                    Expanded(
                         child: Container(
                           child: Text(
                             widget.rideRequestInformation!.healthStatus!,
@@ -163,7 +163,7 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
 
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          primary: Colors.red
+                          backgroundColor: Colors.red
                       ),
 
                       onPressed: (){
@@ -259,7 +259,7 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
     String rideRequestId = "";
     FirebaseDatabase.instance.ref()
         .child("Drivers")
-        .child(firebaseAuth?.currentUser?.uid ?? "")
+        .child(firebaseAuth.currentUser!.uid)
         .child("newRideStatus")
         .once()
         .then((snapData)  {

@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:drivers_app/global/global.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +20,8 @@ class _RatingsTabPageState extends State<RatingsTabPage> {
   String titleStarRating = "";
   double driverRating = 0;
   List<Map<String, dynamic>> comments = [];
+
+  get flutter => null;
 
   @override
   void initState() {
@@ -103,7 +108,7 @@ class _RatingsTabPageState extends State<RatingsTabPage> {
         backgroundColor: Colors.white,
         title: Text(
           AppLocalizations.of(context)!.rateDriver,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 15,
             color: Colors.black,
@@ -114,8 +119,8 @@ class _RatingsTabPageState extends State<RatingsTabPage> {
           onPressed: () {
             Navigator.pushReplacementNamed(context, "/main_screen");
           },
-          style: ElevatedButton.styleFrom(primary: Colors.white),
-          child: Icon(
+       //   style: flutter.styleFrom(backgroundColor: Colors.white),
+          child: const Icon(
             Icons.arrow_back_outlined,
             color: Colors.redAccent,
           ),
@@ -138,17 +143,24 @@ class _RatingsTabPageState extends State<RatingsTabPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const SizedBox(height: 5.0,),
+
               CircleAvatar(
-                backgroundColor: Colors.white,
-                child: Image.asset(
-                  "images/Passport_Photo.png",
-                ),
-                radius: 60,
+                radius: 40,
+                backgroundImage: driverData.photoUrl != null
+                    ? MemoryImage(ImageMemoryWidget())
+                    : null,
+                child: driverData.photoUrl == null
+                    ? Icon(
+                  Icons.person,
+                  size: 40,
+                  color: Colors.white,
+                )
+                    : null,
               ),
               const SizedBox(height: 20.0,),
               Text(
-                driverData?.name ?? "",
-                style: TextStyle(
+                driverData.name!,
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -159,7 +171,7 @@ class _RatingsTabPageState extends State<RatingsTabPage> {
                 child: Text(
                   AppLocalizations.of(context)!.ratingavv,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -197,7 +209,7 @@ class _RatingsTabPageState extends State<RatingsTabPage> {
               SizedBox(
                 height: 100,
                 child: comments.isEmpty
-                    ? Center(
+                    ? const Center(
                         child: Text(
                           'No comments available.',
                           style: TextStyle(
@@ -222,5 +234,11 @@ class _RatingsTabPageState extends State<RatingsTabPage> {
         ),
       ),
     );
+
+  }
+  Uint8List ImageMemoryWidget()  {
+    String imageData = driverData.photoUrl!.split(',')[1];
+    Uint8List bytes = base64.decode(imageData);
+    return bytes;
   }
 }

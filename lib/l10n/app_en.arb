@@ -70,7 +70,6 @@
     "fare": "Fare",
     "distance":"Distance",
     "paycash":"Pay cash",
-    "modify":"Modify",
     "tripFareAmount":"Trip Fare Amount",
     "paydriver":"Pay Driver",
     "youhavecancelledtheriderequest":"You have cancelled the ride request",

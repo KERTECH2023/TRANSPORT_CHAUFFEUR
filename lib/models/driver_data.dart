@@ -8,10 +8,10 @@ class DriverData{
    String? carColor;
    String? carModel;
    String? carNumber;
-   String? carType;
+   //String? carType;
    String? lastTripId;
    String? totalEarnings;
-   bool? cstatus;
+   String? cstatus;
    String? dateNaissance;
    String? address;
    String? cnicNo;
@@ -19,6 +19,7 @@ class DriverData{
    String? licence;
    String? postalCode;
    String? photoUrl;
+   String? newRideStatus;
 
   DriverData({
     this.id,
@@ -28,18 +29,18 @@ class DriverData{
     this.carColor,
     this.carModel,
     this.carNumber,
-    this.carType,
+   // this.carType,
     this.lastTripId,
     this.totalEarnings,
-    this.cstatus,
+    //this.cstatus,
     this.dateNaissance,
     this.address,
     this.cnicNo,
     this.gender,
     this.licence,
     this.postalCode,
-    this.photoUrl
-
+    this.photoUrl,
+    this.newRideStatus
   });
   DriverData.fromSnapshot(DataSnapshot snapshot){
     id = snapshot.key;
@@ -49,10 +50,10 @@ class DriverData{
     carColor =(snapshot.value as dynamic)['carColor'];
     carModel =(snapshot.value as dynamic)['carModel'];
     carNumber =(snapshot.value as dynamic)['carNumber'];
-    carType =(snapshot.value as dynamic)['carType'];
+   // carType =(snapshot.value as dynamic)['carType'];
     lastTripId =(snapshot.value as dynamic)['lastTripId'];
     totalEarnings =(snapshot.value as dynamic)['totalEarnings'];
-    cstatus =(snapshot.value as dynamic)['Cstatus'];
+  //  cstatus =(snapshot.value as dynamic)['Cstatus'];
     dateNaissance =(snapshot.value as dynamic)['DateNaissance'];
     address =(snapshot.value as dynamic)['address'];
     cnicNo =(snapshot.value as dynamic)['cnicNo'];
@@ -60,6 +61,8 @@ class DriverData{
     licence =(snapshot.value as dynamic)['licence'];
     postalCode =(snapshot.value as dynamic)['postalCode'];
     photoUrl =(snapshot.value as dynamic)['imageUrl'];
+    newRideStatus =(snapshot.value as dynamic)['newRideStatus'];
+
 
   }
 
